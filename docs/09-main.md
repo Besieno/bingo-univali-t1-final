@@ -28,9 +28,9 @@ Não existe `main.h` neste projeto — confirmado olhando `src/` (17 arquivos, n
    do programa — não dentro do laço de `jogar` — porque a semente é uma propriedade do processo, não da partida.
 
 2. **`main.cpp:30` — `system("mode con: cols=120 lines=30 > nul 2>&1");`** Redimensiona a janela do terminal
-   antes de qualquer cartela existir. O tamanho 120×30 não foi chutado: é o valor medido rodando a versão final
-   até o fim de uma partida real (72 números sorteados) — o layout das 5 cartelas lado a lado (`jogo.cpp:29-34`)
-   precisa exatamente disso, sem sobra (ver `fatos-verificados.md`). O `> nul 2>&1` no fim manda a saída e o erro
+   antes de qualquer cartela existir. O tamanho 120×30 não foi chutado: renderizando a saída de uma
+   partida inteira, com os nomes da equipe, o tabuleiro ocupa **115 colunas × 26 linhas** — o layout das 5 cartelas
+   lado a lado (`jogo.cpp:29-34`) cabe em 120×30 com uma folga pequena, e não caberia num `cmd` padrão de 80×25. O `> nul 2>&1` no fim manda a saída e o erro
    do comando `mode` pro "lugar nenhum", pra não aparecer uma mensagem de erro do Windows na tela caso o terminal
    não aceite o redimensionamento.
 

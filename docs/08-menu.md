@@ -75,7 +75,7 @@ sub-rotinas chamadas e devolvidas, em vez de um script linear que roda uma vez e
   exatamente o bug medido na versão anterior do trabalho — digitar uma letra deixa o `cin` em estado de
   erro permanente, `opcao` nunca muda de valor, e o `do-while` gira para sempre. Isso foi reproduzido
   rodando o executável antigo: mais de 4 MB de "Valor inválido" cuspidos em 4 segundos, sem parar
-  (`fatos-verificados.md`, seção "Bugs reproduzidos rodando"). `cin.clear()` é a única forma de tirar o
+  (`docs/99-o-que-foi-medido.md`, seção "Bugs reproduzidos rodando"). `cin.clear()` é a única forma de tirar o
   fluxo desse estado; sem ele a checagem de intervalo (`menu.cpp:34`) nunca teria uma nova leitura para
   avaliar.
 
@@ -83,7 +83,7 @@ sub-rotinas chamadas e devolvidas, em vez de um script linear que roda uma vez e
   sem argumento descarta só **um** caractere. Se sobrar mais de um caractere de lixo antes do Enter (por
   exemplo, o usuário digitar "ab" e depois Enter), um caractere continua no buffer e é consumido pela
   leitura seguinte — o mesmo tipo de falha catalogado no relatório de auditoria para a versão anterior
-  do grupo (`relatorio.md`, item J3). Passar `1000` como limite garante que a linha inteira até o `\n`
+  do grupo (`docs/97-auditoria-completa.md`, item J3). Passar `1000` como limite garante que a linha inteira até o `\n`
   (ou até 1000 caracteres, o que vier primeiro) seja descartada de uma vez.
 
 - **Tratar `cin.eof()` como "sair" em vez de deixar o laço tentar de novo**: sem essa saída, uma entrada
@@ -152,7 +152,7 @@ sub-rotinas chamadas e devolvidas, em vez de um script linear que roda uma vez e
    `cin.fail()` detecta que não veio número (`menu.cpp:21`); como não é fim de entrada,
    `cin.clear()` tira o `cin` do estado de erro (28) e `opcao` volta a 0 (29), fazendo o `do-while`
    perguntar de novo. Sem isso o programa entraria num laço de erro permanente — é o bug reproduzido
-   na versão anterior do trabalho (`fatos-verificados.md`).
+   na versão anterior do trabalho (`docs/99-o-que-foi-medido.md`).
 
 2. **Por que o programa não fecha sozinho depois de uma partida?**
    `chamarMenu` é um `do-while` (`menu.cpp:56-78`) que só sai quando `opcao == 3`; `jogar()` e
@@ -203,6 +203,6 @@ sub-rotinas chamadas e devolvidas, em vez de um script linear que roda uma vez e
   o mesmo comando; vale saber explicar a diferença se perguntarem por que não é idêntico.
 - **`sobre()` e o menu dependem do terminal interpretar sequências ANSI** (`\033[`, `\033c`) para
   posicionar cursor, colorir e limpar a tela. A versão final compila e roda sem erro no ambiente
-  testado (`fatos-verificados.md`, seção "Compilação"), mas não conferi a saída visual num `cmd.exe`
+  testado (`docs/99-o-que-foi-medido.md`, seção "Compilação"), mas não conferi a saída visual num `cmd.exe`
   puro sem VT100 habilitado — vale testar nesse terminal específico antes da defesa, caso o professor
   use um.

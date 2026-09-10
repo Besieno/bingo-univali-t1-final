@@ -1,0 +1,99 @@
+                                                                              Universidade do Vale do Itajaí
+                                                                                    Escola Politécnica
+
+                                              Algoritmos e Programação II (22817)
+
+                                             Definição do trabalho da M1 - BINGO
+
+Data de entrega: 11/09/2026. (até 08:00h)
+Modalidade: Cinco integrantes.
+
+DESCRIÇÃO:
+
+           O Bingo é, basicamente, um jogo de probabilidades. Cada jogador possui cartelas, sendo que cada
+cartela possui cinco colunas com cinco linhas, e cada linha possui 5 valores. Os jogadores devem ouvir os
+números “cantados”, verificar se os mesmos constam na cartela, e caso constem marcá-los na cartela. A
+primeira pessoa que completar uma cartela é a vencedora.
+
+REGRAS PARA O DESENVOLVIMENTO
+
+     O jogo deverá possuir um menu onde será possível escolher:
+     • Jogar
+     • Sobre
+     • Sair
+
+     A seguir serão listadas, de trás para frente, o que deve ser implementado em cada parte do menu.
+
+Sair:
+           Essa é uma opção para finalizar o programa. Observe que seu jogo só deve ser encerrado ao
+
+selecionar essa opção, caso qualquer outra opção seja escolhida ela deve retornar ao menu no fim de sua
+execução.
+
+Sobre:
+           Quando essa opção for selecionada, deverão ser exibidas a equipe de desenvolvimento (o nome de
+
+cada membro da equipe), o mês/ano e o nome do professor/disciplina.
+
+Jogar:
+Inicialmente devem ser sorteados os valores de cada cartela (cada cartela possui 25 números, sendo que
+cada linha possui 5 números sorteados) seguindo o seguinte padrão:
+
+     • Primeira linha – sorteados valores de 1 a 15;
+     • Segunda linha – sorteados valores de 16 a 30;
+     • Terceira linha – sorteados valores de 31 a 45;
+     • Quarta linha – sorteados valores de 46 a 60; e
+     • Quinta linha – sorteados valores de 61 a 75.
+Deve-se gerar então 5 cartelas randomicamente, que sigam as regras abaixo:
+     • A cada nova execução deverá haver um novo sorteio com valores diferenciados;
+     • Cada cartela terá um número de identificação e um nome;
+     • Não pode haver valores repetidos nas linhas;
+     • Não pode haver cartelas repetidas; e
+     • Exibir na tela as cartelas geradas durante toda a execução.
+     • Marcar os valores já sorteados nas cartelas com cores diferenciadas
+     • As linhas devem estar em ordem crescente
+
+A seguir é feito o sorteio dos valores do bingo. Serão sorteados valores de 1 a 75, sendo que os valores
+não devem ser repetidos e devem ser exibidos na tela em ordem crescente, destacando o atual valor
+sorteado com uma cor diferente. Por exemplo, se foi sorteado o número 2, o mesmo não pode ser
+sorteado uma segunda vez. Os valores sorteados devem ser exibidos, e o sorteio para quando um dos
+jogadores fizer “bingo”. Deve-se marcar os valores já sorteados nas cartelas com uma cor diferenciada e
+os valores sorteados também devem ser exibidos na tela durante todo o sorteio.
+
+Cada sorteio só deve ser realizado ao selecionar a tecla "enter" e deve-se destacar o valor sorteado na
+cartela.
+
+Ao iniciar o jogo, deve-se solicitar o nome do jogador de cada cartela. Ao final, deve ser exibido o nome
+do jogador e o número da cartela vencedora.
+
+Algumas regras:
+     • Utilize sub-rotinas e passagem de parâmetros.
+     • Não utilize templates
+     • Não utilize variáveis globais e nenhum comando ainda não abordado na disciplina.
+
+Defesa (Obrigatória):
+
+    • Durante a defesa serão realizados questionamento sobre o trabalho realizado pelo grupo. A defesa é obrigatória
+         e deverá ser feita pelos integrantes do grupo na aula. Se algum integrante não estiver presente durante a aula
+         de defesa, deverá solicitar a segunda chamada de avaliação, caso o pedido seja deferido, o mesmo defenderá
+         posteriormente em data a ser agendada com o professor.
+
+Entregas:
+
+    • Postar nesta atividade: Trabalho T1
+    • Código fonte desenvolvido: Em formato .txt ou .cpp, é de responsabilidade do grupo verificar se o arquivo
+
+         postado é o correto.
+
+                                                      Critérios de Avaliação:
+
+1. Organização e clareza do código = 20% da nota.
+2. Identificação dos autores e Comentários pertinentes e oportunos no código = 10% da nota.
+3. Funcionamento correto conforme a especificação = 50% da nota.
+4. Recursos da linguagem utilizados = 20% da nota.
+5. Defesa do código (Todas as notas relativas ao código dependem do desempenho na defesa, Sem a defesa o trabalho
+terá nota ZERO)
+
+*Evidências de cópia de outras fontes (colegas, Internet) no código fonte implicam em nota ZERO como nota final deste
+trabalho (sem possibilidade de recuperação da nota).
+

@@ -37,6 +37,10 @@ haver um novo sorteio com valores diferenciados"*. `time(NULL)` conta em **segun
 o programa duas vezes rápido dá a mesma semente e o mesmo jogo. É fácil do professor
 reproduzir sem querer — basta fechar e abrir.
 
+**Medido:** dez partidas rodadas em sequência, sem intervalo, saíram em **dois grupos de
+jogos idênticos** (cinco e cinco) — cartelas iguais, mesma ordem de sorteio. Com 1 segundo
+de intervalo entre execuções, seis partidas saíram todas diferentes. Não é teoria.
+
 **Conserto:** `srand((unsigned int)time(NULL) + (unsigned int)clock());` — `clock()` já vem
 de `<time.h>`, que o arquivo inclui. **1 min.**
 
