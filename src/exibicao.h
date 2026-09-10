@@ -1,6 +1,6 @@
 /*
-    exibicao.h - o que aparece na tela: as cartelas, o número da vez
-    e a lista de todos os números já sorteados.
+    exibicao.h - o que aparece na tela: as cartelas, a lista de sorteados
+    e a marcação colorida dos números.
     Equipe: ver comum.h
 */
 
@@ -10,9 +10,9 @@
 #include <string>
 #include "comum.h"
 
-void exibir(int mat[][TAM], int contador, std::string nome[], int x, int y); // Desenha uma cartela e o dono dela
-void pintarNumero(int mat[][TAM], int num, int x, int y, int cor);           // Pinta o número dentro da cartela
-void mostrarSorteado(int num, int x, int y);                                 // Escreve "Numero sorteado: N"
-void exibirSorteados(int lista[], int quantidade, int atual, int x, int y);  // Lista os sorteados em ordem crescente
+void mostrarSorteado(int num, int numSorteados[], int quantidade);            // lista todos os sorteados, em ordem
+void apagarSorteado();                                                        // limpa a área da mensagem
+void pintarNumero(int mat[][TAM], int num, int x, int y, int cor);            // pinta o número dentro da cartela
+void exibir(int mat[][TAM], int contador, std::string nome[], int x, int y);  // desenha uma cartela e o dono dela
 
 #endif

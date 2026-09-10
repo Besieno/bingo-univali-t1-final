@@ -1,44 +1,26 @@
-/*
-    Trabalho M1 - BINGO
-    Universidade do Vale do Itajaí - Escola Politécnica
-    Algoritmos e Programação II (22817)
-    Professor: Rafael Ballotin Martins
-    Setembro de 2026
-
-    Equipe de desenvolvimento:
-        Bernardo Sieno
-        Henrique Dorow
-        João Vitor Silva da Cruz
-        Julio Cesar Manabe Padilha
-        Nicolas do Vale Mezencio
-
-    Objetivo: implementar um bingo com 5 cartelas 5x5.
-    Mecanica: sao geradas 5 cartelas DIFERENTES, com intervalos diferentes em cada
-    linha; a cada Enter e sorteado um numero e conferido se ele esta em alguma cartela.
-
-    Este arquivo foi montado a partir da pasta src/, onde o mesmo codigo esta
-    separado em um arquivo por parte do jogo (tela, ordenacao, cartela, sorteio,
-    vitoria, exibicao, jogadores, jogo, menu, main). O conteudo das sub-rotinas
-    e identico: aqui elas aparecem todas juntas, na ordem em que compilam.
-*/
+//Equipe de desenvolvimento: Bernardo Sieno, Henrique Dorow, João Vitor Silva da Cruz, Julio Cesar Manabe Padilha e Nicolas do Vale Mezencio
+// Objetivo: implementar um bingo com 5 cartelas 5x5
+// Mecânica: São geradas 5 cartelas DIFERENTES com intervalos diferentes em cada linha, a cada enter é sorteado um número e é verificado se ele está em alguma cartelas
 
 #include <iostream>
-#include <string>
 #include <time.h>
 #include <stdlib.h>
-
 using namespace std;
 
-#define TAM 5 // A cartela é 5x5: 5 linhas de 5 números
-
-// Códigos de cor no mesmo padrão do codefun.h que o professor passou
+#define TAM 5
 #define BLACK 0
 #define RED 1
 #define GREEN 2
 
-// ------------------------------------------------------------------------
-// TELA - posicionar o cursor e escolher a cor (do codefun_GDB.h do professor)
-// ------------------------------------------------------------------------
+int lerOpcao(int opcao) { // Função responsável por ler e validar a opção escolhida no menu
+	do {
+		cin >> opcao;
+		if (opcao < 1 or opcao > 3) { // Verifica se a opção está fora do intervalo válido
+			cout << endl << "\tValor inválido, escolha uma das opções válidas: ";
+		}
+	} while (opcao < 1 or opcao > 3); // Repete enquanto a opção for inválida
+	return opcao;
+}
 
 void gotoxy(int x, int y) // Inicia a função responsável por posicionar o cursor em uma coordenada específica do terminal.
 {
@@ -46,24 +28,13 @@ void gotoxy(int x, int y) // Inicia a função responsável por posicionar o cur
     cout.flush();
 }
 
-int ansiBG(int color) {
-    if (color < 8)
-        return 40 + color;
-    else
-        return 100 + (color - 8);
+void nomearCartelas(string nome[]) { // Inicia a função responsável por armazenar os nomes dos jogadores.
+        for (int i = 0; i < TAM; i++) {
+            cout << "\n\tDigite o nome do " << i+1 << "º jogador: ";
+            cin >> nome[i];      
+        }
+        cout << "\033c";
 }
-
-void textbackground(int newcolor) {
-    if (newcolor == BLACK)
-        cout << "\033[49m";
-    else
-        cout << "\033[" << ansiBG(newcolor) << "m";
-    cout.flush();
-}
-
-// ------------------------------------------------------------------------
-// ORDENACAO - Bubble Sort em duas sobrecargas: linha de cartela e vetor de sorteados
-// ------------------------------------------------------------------------
 
 void bubblesort(int mat[][TAM], int linha) { // Inicia o algoritmo Bubble Sort para ordenar uma linha da cartela.
 	int i, j, cond, temp;
@@ -100,94 +71,20 @@ void bubblesort(int vet[], int n) {
     }
 }
 
-// ------------------------------------------------------------------------
-// CARTELA - gerar a cartela: faixa por linha, sem repetir, em ordem crescente
-// ------------------------------------------------------------------------
-
-bool verifyNum(int mat[][TAM], int linha, int num, int coluna) { // Função que verifica se um número já existe nas posições anteriores da linha atual
-	for (int j = 0; j < coluna; j++) { // Percorre somente as colunas que já foram preenchidas
-		if (mat[linha][j] == num) { // Verifica se o número gerado já apareceu na linha
-			return true; // Número repetido encontrado
-		} 
-	}
-	return false; // Número não foi encontrado
+int ansiBG(int color) {
+    if (color < 8)
+        return 40 + color;
+    else
+        return 100 + (color - 8);
 }
 
-void gerarCartela(int mat[][TAM]) { // Função responsável por gerar uma cartela de Bingo
-	int limiteFinal;
-	int limiteInicial;
-	int num;
-
-	for (int i = 0; i < TAM; i++) { // Percorre cada linha da cartela
-		limiteInicial = 15 * i + 1; // Define o primeiro número possível da linha - Linha 0: 1 - Linha 1: 16 - Linha 2: 31 - Linha 3: 46 - Linha 4: 61
-		limiteFinal = 15*(1+i); // Define o último número possível da linha - Linha 0: 15 - Linha 1: 30 - Linha 2: 45 - Linha 3: 60 - Linha 4: 75
-		for (int j = 0; j < TAM; j++) { 
-			do {
-				mat[i][j] = limiteInicial + rand() % (limiteFinal - limiteInicial + 1); // Gera um número aleatório dentro do intervalo definido para a linha atual
-				num = mat[i][j];
-			} while (verifyNum(mat, i, num, j)); // Gera outro número caso o número já tenha aparecido
-		}
-		bubblesort(mat, i); // Ordena a linha depois que seus 5 números foram gerados
-	}
-
-	
+void textbackground(int newcolor) {
+    if (newcolor == BLACK)
+        cout << "\033[49m";
+    else
+        cout << "\033[" << ansiBG(newcolor) << "m";
+    cout.flush();
 }
-
-bool verifyCartela(int a[][TAM], int b[][TAM]) { // Retorna verdadeiro quando todas as posições das cartelas são iguais.
-        for (int i = 0; i < TAM; i++) {
-		    for (int j = 0; j < TAM; j++) {
-			    if (a[i][j] != b[i][j] ) {
-			        return false;
-			    }
-		    }
-        }
-    return true;
-}
-
-// ------------------------------------------------------------------------
-// SORTEIO - sortear de 1 a 75 sem repetir
-// ------------------------------------------------------------------------
-
-bool verificarSorteado(int vet[], int num, int quantidade) { // Função que verifica se um número já existe nas posições anteriores da linha atual
-	for (int i = 0; i < quantidade; i++) { // Percorre somente as colunas que já foram preenchidas
-		if (vet[i] == num) { // Verifica se o número gerado já apareceu na linha
-			return true; // Número repetido encontrado
-		} 
-	}
-	return false; // Número não foi encontrado
-}
-
-int sorteio(int numSorteados[], int quantidade) {
-    int num;
-    
-    do {
-        num = rand() % 75 + 1; // Gera um número aleatório entre 1 e 75.
-    } while (verificarSorteado(numSorteados, num, quantidade)); // Verifica se o número gerado já foi sorteado.
-    
-    numSorteados[quantidade] = num;
-    
-    return num;
-}
-
-// ------------------------------------------------------------------------
-// VITORIA - a cartela esta completa?
-// ------------------------------------------------------------------------
-
-bool cartelaCompleta(int mat[][TAM], int numSorteados[], int quantidade) { // Informa que todos os números da cartela foram sorteados.
-    for (int i = 0; i < TAM; i++) {
-        for (int j = 0; j < TAM; j++) {
-            if (!verificarSorteado(numSorteados, mat[i][j], quantidade)) {
-                return false;
-            }
-        }
-    }
-
-    return true;
-}
-
-// ------------------------------------------------------------------------
-// EXIBICAO - desenhar as cartelas, a lista de sorteados e a marcacao colorida
-// ------------------------------------------------------------------------
 
 void mostrarSorteado(int num, int numSorteados[], int quantidade) { // Exibe o número que acabou de ser sorteado.
     int coluna=0, linha=0;
@@ -265,21 +162,80 @@ void exibir(int mat[][TAM], int contador, string nome[], int x, int y) { // Inic
     }
 }
 
-// ------------------------------------------------------------------------
-// JOGADORES - o nome do dono de cada cartela
-// ------------------------------------------------------------------------
 
-void nomearCartelas(string nome[]) { // Inicia a função responsável por armazenar os nomes dos jogadores.
-        for (int i = 0; i < TAM; i++) {
-            cout << "\n\tDigite o nome do " << i+1 << "º jogador: ";
-            cin >> nome[i];      
-        }
-        cout << "\033c";
+bool verifyNum(int mat[][TAM], int linha, int num, int coluna) { // Função que verifica se um número já existe nas posições anteriores da linha atual
+	for (int j = 0; j < coluna; j++) { // Percorre somente as colunas que já foram preenchidas
+		if (mat[linha][j] == num) { // Verifica se o número gerado já apareceu na linha
+			return true; // Número repetido encontrado
+		} 
+	}
+	return false; // Número não foi encontrado
 }
 
-// ------------------------------------------------------------------------
-// JOGO - a partida: gera, pergunta, desenha, sorteia e confere o vencedor
-// ------------------------------------------------------------------------
+bool verificarSorteado(int vet[], int num, int quantidade) { // Função que verifica se um número já existe nas posições anteriores da linha atual
+	for (int i = 0; i < quantidade; i++) { // Percorre somente as colunas que já foram preenchidas
+		if (vet[i] == num) { // Verifica se o número gerado já apareceu na linha
+			return true; // Número repetido encontrado
+		} 
+	}
+	return false; // Número não foi encontrado
+}
+
+bool cartelaCompleta(int mat[][TAM], int numSorteados[], int quantidade) { // Informa que todos os números da cartela foram sorteados.
+    for (int i = 0; i < TAM; i++) {
+        for (int j = 0; j < TAM; j++) {
+            if (!verificarSorteado(numSorteados, mat[i][j], quantidade)) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+void gerarCartela(int mat[][TAM]) { // Função responsável por gerar uma cartela de Bingo
+	int limiteFinal;
+	int limiteInicial;
+	int num;
+
+	for (int i = 0; i < TAM; i++) { // Percorre cada linha da cartela
+		limiteInicial = 15 * i + 1; // Define o primeiro número possível da linha - Linha 0: 1 - Linha 1: 16 - Linha 2: 31 - Linha 3: 46 - Linha 4: 61
+		limiteFinal = 15*(1+i); // Define o último número possível da linha - Linha 0: 15 - Linha 1: 30 - Linha 2: 45 - Linha 3: 60 - Linha 4: 75
+		for (int j = 0; j < TAM; j++) { 
+			do {
+				mat[i][j] = limiteInicial + rand() % (limiteFinal - limiteInicial + 1); // Gera um número aleatório dentro do intervalo definido para a linha atual
+				num = mat[i][j];
+			} while (verifyNum(mat, i, num, j)); // Gera outro número caso o número já tenha aparecido
+		}
+		bubblesort(mat, i); // Ordena a linha depois que seus 5 números foram gerados
+	}
+
+	
+}
+
+bool verifyCartela(int a[][TAM], int b[][TAM]) { // Retorna verdadeiro quando todas as posições das cartelas são iguais.
+        for (int i = 0; i < TAM; i++) {
+		    for (int j = 0; j < TAM; j++) {
+			    if (a[i][j] != b[i][j] ) {
+			        return false;
+			    }
+		    }
+        }
+    return true;
+}
+
+int sorteio(int numSorteados[], int quantidade) {
+    int num;
+    
+    do {
+        num = rand() % 75 + 1; // Gera um número aleatório entre 1 e 75.
+    } while (verificarSorteado(numSorteados, num, quantidade)); // Verifica se o número gerado já foi sorteado.
+    
+    numSorteados[quantidade] = num;
+    
+    return num;
+}
+
 
 void jogar(int mat1[][TAM], int mat2[][TAM], int mat3[][TAM], int mat4[][TAM], int mat5[][TAM], string nome[], int numSorteados[], int quantidade) { // Função responsável por iniciar o jogo
 	int ganhadores = 0;
@@ -390,20 +346,6 @@ void jogar(int mat1[][TAM], int mat2[][TAM], int mat3[][TAM], int mat4[][TAM], i
     } while (ganhadores == 0 && quantidade < 75);
 }
 
-// ------------------------------------------------------------------------
-// MENU - desenha Jogar/Sobre/Sair e devolve a opcao
-// ------------------------------------------------------------------------
-
-int lerOpcao(int opcao) { // Função responsável por ler e validar a opção escolhida no menu
-	do {
-		cin >> opcao;
-		if (opcao < 1 or opcao > 3) { // Verifica se a opção está fora do intervalo válido
-			cout << endl << "\tValor inválido, escolha uma das opções válidas: ";
-		}
-	} while (opcao < 1 or opcao > 3); // Repete enquanto a opção for inválida
-	return opcao;
-}
-
 void sobre() { // Função responsável por exibir as informações do trabalho
 	cout<<"\033c";
 	cout << "\n\tEquipe de desenvolvimento: \n\t\tBernardo Sieno\n\t\tHenrique Dorow\n\t\tJoão Vitor Silva da Cruz\n\t\tJulio Cesar Manabe Padilha\n\t\tNicolas do Vale Mezencio\n"; // créditos
@@ -413,6 +355,8 @@ void sobre() { // Função responsável por exibir as informações do trabalho
 	cin.ignore();
 	cin.ignore();
 }
+
+
 
 int chamarMenu() { // Função responsável por controlar o menu principal
 		cout<<"\033c";
@@ -426,18 +370,6 @@ int chamarMenu() { // Função responsável por controlar o menu principal
 		opcao = lerOpcao(opcao); // Lê e valida a opção escolhida
 	return opcao;
 }
-
-// ------------------------------------------------------------------------
-// MAIN - a largada e o laco do menu
-// ------------------------------------------------------------------------
-
-//Equipe de desenvolvimento: Bernardo Sieno, Henrique Dorow, João Vitor Silva da Cruz, Julio Cesar Manabe Padilha e Nicolas do Vale Mezencio
-// Objetivo: implementar um bingo com 5 cartelas 5x5
-// Mecânica: São geradas 5 cartelas DIFERENTES com intervalos diferentes em cada linha, a cada enter é sorteado um número e é verificado se ele está em alguma cartelas
-
-// main.cpp - a largada: liga o sorteador, reserva a memória das 5 cartelas e
-// roda o laço do menu. Toda a lógica está nos outros arquivos.
-// Equipe: ver comum.h
 
 
 

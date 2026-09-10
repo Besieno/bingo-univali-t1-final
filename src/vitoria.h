@@ -8,6 +8,6 @@
 
 #include "comum.h"
 
-bool cartelaCompleta(int mat[][TAM], int numSorteados[], int quantidade); // Todos os 25 números já saíram?
+bool cartelaCompleta(int mat[][TAM], int numSorteados[], int quantidade);
 
 #endif

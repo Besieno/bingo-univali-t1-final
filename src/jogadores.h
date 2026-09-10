@@ -8,6 +8,6 @@
 
 #include <string>
 
-void nomearCartelas(std::string nome[]); // Pergunta o nome do jogador de cada uma das 5 cartelas
+void nomearCartelas(std::string nome[]); // pergunta o nome de cada um dos 5 jogadores
 
 #endif

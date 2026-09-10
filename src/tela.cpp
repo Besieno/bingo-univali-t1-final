@@ -1,7 +1,7 @@
 /*
-    tela.cpp - implementação das três funções de terminal.
-    gotoxy, textbackground e ansiBG vieram do codefun_GDB.h que o professor
-    entregou: é material dele, não é código de internet.
+    tela.cpp - as três funções de terminal.
+    gotoxy, textbackground e ansiBG vêm do codefun_GDB.h que o professor entregou
+    (está em referencia/): é material dele, não é código de internet.
     Equipe: ver comum.h
 */
 
@@ -16,14 +16,14 @@ void gotoxy(int x, int y) // Inicia a função responsável por posicionar o cur
     cout.flush();
 }
 
-int ansiBG(int cor)
-{ // Converte o código de cor do codefun.h do professor para o código ANSI de fundo
-    int bg[16] = {40, 44, 42, 46, 41, 45, 43, 47, 100, 104, 102, 106, 101, 105, 103, 107};
-    return bg[cor % 16];
+int ansiBG(int color) {
+    if (color < 8)
+        return 40 + color;
+    else
+        return 100 + (color - 8);
 }
 
-void textbackground(int newcolor)
-{
+void textbackground(int newcolor) {
     if (newcolor == BLACK)
         cout << "\033[49m";
     else

@@ -84,3 +84,45 @@ só com Ctrl+C, ou quando o disco enche. A mesma entrada na versão final produz
 na tela, faixa por linha, linhas crescentes e sem repetido, as 5 cartelas diferentes entre si,
 lista de sorteados crescente e sem repetir dentro de 1–75, e se o vencedor anunciado tem mesmo
 os 25 números já sorteados. São 400 linhas de cartela conferidas.
+
+---
+
+# Versão do grupo de 10/09/2026 (a que está no ar)
+
+Tudo abaixo foi medido nesta versão, depois da troca. O que está acima vale para a versão
+anterior — não misture os números.
+
+## Compilação
+- `src/*.cpp` e `entrega/bingo.cpp` compilam com `-Wall -Wextra` com **2 avisos**, os mesmos
+  do arquivo único que o grupo mandou:
+  - `'linha' set but not used` (`exibicao.cpp`, dentro de `mostrarSorteado`)
+  - `'opcao' is used uninitialized` (`menu.cpp`, dentro de `chamarMenu`)
+- A separação em 10 módulos não mudou nada: **as 21 funções batem byte-a-byte** (ignorando
+  espaço e comentário) com o `main (6).cpp` original, e nenhuma linha de código ficou de fora.
+
+## O que esta versão faz certo (conferido rodando, 6 partidas)
+`ferramentas/conferir-partida.mjs` em 6 partidas: **6 passaram**.
+- 5 cartelas na tela, cada linha na faixa certa, crescente, sem repetido (150 linhas conferidas)
+- as 5 cartelas diferentes entre si
+- **a lista de números sorteados aparece na tela, em ordem crescente, sem repetir, dentro de 1–75**
+  — com o número da vez em fundo vermelho
+- o vencedor anunciado tem mesmo os 25 números já sorteados
+
+## O que foi medido de errado
+- **Letra no menu = laço infinito.** `printf 'a\n' | bingo.exe` cortado em 2 s: **86.106.591 bytes**
+  de "Valor inválido", sem parar. `lerOpcao` não chama `cin.clear()`.
+- **Entrada que termina também trava.** Num teste em que a entrada acabou sem escolher "Sair",
+  o programa encheu **9,3 GB** de arquivo em segundos (mesma causa: `cin` em estado de erro
+  nunca mais bloqueia). Com teclado humano isso não acontece — mas Ctrl+Z reproduz.
+- **Tabuleiro de 122 colunas × 37 linhas** (medido renderizando a saída real). Não cabe em
+  `cmd` 80×25 nem em Windows Terminal 120×30: as cartelas 2 e 5 começam na coluna 90, e a
+  lista de sorteados é impressa a partir da linha 36.
+- **O vencedor sai sem o número da cartela:** `A cartela do jogador Henrique ganhou!`.
+  O enunciado pede nome **e** número (R29).
+- **Três partidas seguidas saíram idênticas** (mesma semente, `srand(time(NULL))` conta em
+  segundos). Com 1 s de intervalo, as três seguintes saíram diferentes.
+
+## Nota de método
+Testar esta versão alimentando o jogo por arquivo é perigoso: se a entrada acabar sem um `3`
+(Sair), o laço infinito do menu enche o disco. Use sempre um teto:
+`cat entrada.txt | ./bingo.exe | head -c 8000000 > saida.txt`.

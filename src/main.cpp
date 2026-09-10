@@ -1,38 +1,42 @@
-/*
-    Trabalho M1 - BINGO
-    Universidade do Vale do Itajaí - Escola Politécnica
-    Algoritmos e Programação II (22817)
-    Professor: Rafael Ballotin Martins
-    Setembro de 2026
+//Equipe de desenvolvimento: Bernardo Sieno, Henrique Dorow, João Vitor Silva da Cruz, Julio Cesar Manabe Padilha e Nicolas do Vale Mezencio
+// Objetivo: implementar um bingo com 5 cartelas 5x5
+// Mecânica: São geradas 5 cartelas DIFERENTES com intervalos diferentes em cada linha, a cada enter é sorteado um número e é verificado se ele está em alguma cartelas
 
-    Equipe de desenvolvimento:
-        Bernardo Sieno
-        Henrique Dorow
-        João Vitor Silva da Cruz
-        Julio Cesar Manabe Padilha
-        Nicolas do Vale Mezencio
+// main.cpp - a largada: liga o sorteador, reserva a memória das 5 cartelas e
+// roda o laço do menu. Toda a lógica está nos outros arquivos.
+// Equipe: ver comum.h
 
-    main.cpp - só a largada: liga o sorteador, reserva a memória das 5 cartelas
-    e entrega o controle ao menu. Toda a lógica está nos outros arquivos.
-*/
-
+#include <iostream>
 #include <string>
 #include <time.h>
 #include <stdlib.h>
 #include "comum.h"
 #include "menu.h"
+#include "jogo.h"
 
 using namespace std;
 
-int main()
-{
-    srand(time(NULL));
-    system("mode con: cols=120 lines=30 > nul 2>&1"); // Abre a janela no tamanho que o tabuleiro precisa (o > nul evita mensagem de erro se o terminal não aceitar)
+int main() {
+	srand(time(NULL));
+	int cartela1[TAM][TAM], cartela2[TAM][TAM], cartela3[TAM][TAM], cartela4[TAM][TAM], cartela5[TAM][TAM], numSorteados[(TAM*TAM)*3], opcao, quantidade=0;
+	string nome[TAM];
+    
+	
+	do {
+	    opcao = chamarMenu();
+    	switch(opcao) { // Executa a ação correspondente à opção
+    		case 1:
+    			jogar(cartela1, cartela2, cartela3, cartela4, cartela5, nome, numSorteados, quantidade);
+    			break;
+    		case 2:
+    			sobre();
+    			break;
+    		case 3:
+    			cout<<"\033c";
+    			cout << "\n\tObrigado por jogar! :)"; // saída
+    			break;
+    		}
+	} while(opcao != 3); // Continua exibindo o menu enquanto não escolher 3
 
-    int cartela1[TAM][TAM], cartela2[TAM][TAM], cartela3[TAM][TAM], cartela4[TAM][TAM], cartela5[TAM][TAM];
-    string nome[TAM];
-
-    chamarMenu(cartela1, cartela2, cartela3, cartela4, cartela5, nome);
-
-    return 0;
+	return 0;
 }

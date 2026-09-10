@@ -12,9 +12,11 @@
         Julio Cesar Manabe Padilha
         Nicolas do Vale Mezencio
 
-    comum.h - o que TODO arquivo do projeto precisa saber.
-    Aqui mora só a medida da cartela, porque ela aparece na assinatura
-    de quase toda função (int mat[][TAM]).
+    Objetivo: implementar um bingo com 5 cartelas 5x5.
+    Mecânica: são geradas 5 cartelas DIFERENTES, com intervalos diferentes em cada
+    linha; a cada Enter é sorteado um número e conferido se ele está em alguma cartela.
+
+    comum.h - o que TODO arquivo precisa saber: a medida da cartela.
 */
 
 #ifndef COMUM_H

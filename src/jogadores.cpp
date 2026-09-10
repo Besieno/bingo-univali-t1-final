@@ -1,7 +1,5 @@
 /*
-    jogadores.cpp - pergunta o nome de cada jogador, um por vez.
-    Usa getline em vez de cin >> porque cin >> para no primeiro espaço:
-    "João Vitor" viraria dois jogadores.
+    jogadores.cpp - pergunta o nome dos 5 jogadores, um por vez.
     Equipe: ver comum.h
 */
 
@@ -12,12 +10,10 @@
 
 using namespace std;
 
-void nomearCartelas(string nome[])
-{ // Inicia a função responsável por armazenar os nomes dos jogadores.
-    for (int i = 0; i < TAM; i++)
-    {
-        cout << "Digite o nome do jogador da cartela " << (i + 1) << ": ";
-        getline(cin, nome[i]); // getline lê a linha inteira, então nome composto não ocupa a vaga do jogador seguinte
-    }
-    cout << "\033c";
+void nomearCartelas(string nome[]) { // Inicia a função responsável por armazenar os nomes dos jogadores.
+        for (int i = 0; i < TAM; i++) {
+            cout << "\n\tDigite o nome do " << i+1 << "º jogador: ";
+            cin >> nome[i];      
+        }
+        cout << "\033c";
 }

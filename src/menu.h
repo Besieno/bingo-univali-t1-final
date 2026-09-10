@@ -1,16 +1,15 @@
 /*
-    menu.h - a porta de entrada do programa: Jogar, Sobre e Sair.
+    menu.h - a porta de entrada: Jogar, Sobre e Sair.
+    Nesta versão chamarMenu só DESENHA o menu e devolve a opção escolhida;
+    quem decide o que fazer com ela é o main.
     Equipe: ver comum.h
 */
 
 #ifndef MENU_H
 #define MENU_H
 
-#include <string>
-#include "comum.h"
-
-void lerOpcao(int &opcao); // Lê a opção do menu e só devolve quando for válida
-void sobre();              // Tela com equipe, professor e mês/ano
-void chamarMenu(int mat1[][TAM], int mat2[][TAM], int mat3[][TAM], int mat4[][TAM], int mat5[][TAM], std::string nome[]);
+int lerOpcao(int opcao); // lê e valida a opção (só devolve 1, 2 ou 3)
+void sobre();            // tela com equipe, professor e mês/ano
+int chamarMenu();        // desenha o menu e devolve a opção escolhida
 
 #endif

@@ -1,5 +1,5 @@
 /*
-    cartela.h - tudo que cria e valida UMA cartela de bingo.
+    cartela.h - cria e valida UMA cartela de bingo.
     Equipe: ver comum.h
 */
 
@@ -8,9 +8,8 @@
 
 #include "comum.h"
 
-void bubblesort(int mat[][TAM], int linha);                                 // Ordena uma linha da cartela
-bool numeroRepetidoNaLinha(int mat[][TAM], int linha, int num, int coluna); // Diz se o número já saiu nesta linha
-void gerarCartela(int mat[][TAM]);                                          // Preenche a cartela inteira, linha por faixa
-bool cartelasIguais(int a[][TAM], int b[][TAM]);                            // Diz se duas cartelas são a mesma
+bool verifyNum(int mat[][TAM], int linha, int num, int coluna); // o número já saiu nesta linha?
+void gerarCartela(int mat[][TAM]);                              // preenche a cartela, linha por faixa
+bool verifyCartela(int a[][TAM], int b[][TAM]);                 // duas cartelas são a mesma?
 
 #endif

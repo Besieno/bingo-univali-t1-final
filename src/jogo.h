@@ -1,5 +1,5 @@
 /*
-    jogo.h - a partida em si.
+    jogo.h - a partida.
     Equipe: ver comum.h
 */
 
@@ -9,6 +9,6 @@
 #include <string>
 #include "comum.h"
 
-void jogar(int mat1[][TAM], int mat2[][TAM], int mat3[][TAM], int mat4[][TAM], int mat5[][TAM], std::string nome[]);
+void jogar(int mat1[][TAM], int mat2[][TAM], int mat3[][TAM], int mat4[][TAM], int mat5[][TAM], std::string nome[], int numSorteados[], int quantidade);
 
 #endif

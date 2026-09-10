@@ -16,7 +16,7 @@ import { fileURLToPath } from 'node:url'
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..')
 
 // Ordem de dependencia: cada funcao precisa aparecer depois do que ela chama.
-const ORDEM = ['tela', 'cartela', 'sorteio', 'vitoria', 'exibicao', 'jogadores', 'jogo', 'menu', 'main']
+const ORDEM = ['tela', 'ordenacao', 'cartela', 'sorteio', 'vitoria', 'exibicao', 'jogadores', 'jogo', 'menu', 'main']
 
 const CABECALHO = `/*
     Trabalho M1 - BINGO
@@ -32,23 +32,28 @@ const CABECALHO = `/*
         Julio Cesar Manabe Padilha
         Nicolas do Vale Mezencio
 
-    Este arquivo foi montado a partir da pasta src/, onde o mesmo codigo
-    esta separado em um arquivo por parte do jogo (tela, cartela, sorteio,
-    exibicao, jogadores, vitoria, jogo, menu). O conteudo das sub-rotinas
+    Objetivo: implementar um bingo com 5 cartelas 5x5.
+    Mecanica: sao geradas 5 cartelas DIFERENTES, com intervalos diferentes em cada
+    linha; a cada Enter e sorteado um numero e conferido se ele esta em alguma cartela.
+
+    Este arquivo foi montado a partir da pasta src/, onde o mesmo codigo esta
+    separado em um arquivo por parte do jogo (tela, ordenacao, cartela, sorteio,
+    vitoria, exibicao, jogadores, jogo, menu, main). O conteudo das sub-rotinas
     e identico: aqui elas aparecem todas juntas, na ordem em que compilam.
 */
 `
 
 const NOMES = {
   tela: 'TELA - posicionar o cursor e escolher a cor (do codefun_GDB.h do professor)',
+  ordenacao: 'ORDENACAO - Bubble Sort em duas sobrecargas: linha de cartela e vetor de sorteados',
   cartela: 'CARTELA - gerar a cartela: faixa por linha, sem repetir, em ordem crescente',
-  sorteio: 'SORTEIO - sortear de 1 a 75 sem repetir e guardar em ordem crescente',
+  sorteio: 'SORTEIO - sortear de 1 a 75 sem repetir',
   vitoria: 'VITORIA - a cartela esta completa?',
-  exibicao: 'EXIBICAO - desenhar as cartelas, o numero da vez e a lista de sorteados',
+  exibicao: 'EXIBICAO - desenhar as cartelas, a lista de sorteados e a marcacao colorida',
   jogadores: 'JOGADORES - o nome do dono de cada cartela',
   jogo: 'JOGO - a partida: gera, pergunta, desenha, sorteia e confere o vencedor',
-  menu: 'MENU - Jogar / Sobre / Sair',
-  main: 'MAIN - a largada',
+  menu: 'MENU - desenha Jogar/Sobre/Sair e devolve a opcao',
+  main: 'MAIN - a largada e o laco do menu',
 }
 
 function lerDefines(arquivo) {

@@ -37,7 +37,7 @@ const txt = readFileSync(process.argv[2], 'latin1')
 
 // --- renderiza num grid, parando antes da limpeza de tela que fecha a partida
 let corte = txt.length
-const idxGanhou = txt.indexOf('ganhou com a cartela')
+const idxGanhou = txt.search(/ganhou/)
 if (idxGanhou > 0) { const c = txt.indexOf(ESC + 'c', idxGanhou); if (c > 0) corte = c }
 const fluxo = txt.slice(0, corte)
 
@@ -103,7 +103,7 @@ if (new Set(assinaturas).size !== assinaturas.length) erros.push('ha cartelas re
 else if (ids.length === 5) ok.push('as 5 cartelas sao diferentes')
 
 // R22/R21: lista de sorteados ordenada e sem repetir
-const yLista = linhas.findIndex((s) => s.includes('Numeros sorteados'))
+const yLista = linhas.findIndex((s) => /N\S*meros sorteados/.test(s))
 if (yLista < 0) erros.push('nao achei a lista de sorteados na tela')
 else {
   const nums = []
@@ -120,16 +120,38 @@ else {
   if (!erros.length) ok.push('lista de sorteados: ' + nums.length + ' numeros, crescente, sem repetir, dentro de 1-75')
 
   // R25/R29: quem ganhou tem mesmo a cartela cheia?
-  const linhaVit = linhas.find((s) => s.includes('ganhou com a cartela'))
-  const mv = linhaVit ? linhaVit.match(/(.+?) ganhou com a cartela (\d)!/) : null
+  // dois formatos de anuncio, dependendo da versao do jogo
+  const linhaVit = linhas.find((s) => s.includes('ganhou'))
+  let mv = null
+  if (linhaVit) {
+    let m = linhaVit.match(/(.+?) ganhou com a cartela (\d)!/)
+    if (m) mv = { nome: m[1].trim(), cartela: m[2] }
+    else {
+      m = linhaVit.match(/A cartela do jogador (.+?) ganhou!/)
+      if (m) {
+        // este formato nao diz o numero da cartela: descobre pelo nome escrito na tela
+        const nome = m[1].trim()
+        // as cartelas ficam lado a lado na MESMA linha de tela, entao procurar o nome
+        // na linha inteira casaria com a cartela errada: tem que olhar a coluna certa
+        const idDono = ids.find((id) => {
+          const y = linhas.findIndex((s) => s.includes('Cartela: ' + id))
+          if (y < 0) return false
+          const x = linhas[y].indexOf('Cartela: ' + id)
+          return (linhas[y + 1] || '').slice(x, x + 40).includes(nome)
+        })
+        mv = { nome, cartela: idDono || null, semNumero: true }
+      }
+    }
+  }
   if (!mv) erros.push('a partida nao anunciou vencedor')
   else {
-    const cart = cartelas[mv[2]]
-    if (!cart) erros.push('vencedor cita a cartela ' + mv[2] + ', que nao esta na tela')
+    if (mv.semNumero) ok.push('ATENCAO: o anuncio nao diz o numero da cartela (o enunciado pede nome E numero)')
+    const cart = mv.cartela ? cartelas[mv.cartela] : null
+    if (!cart) erros.push('nao consegui casar o vencedor "' + mv.nome + '" com nenhuma cartela da tela')
     else {
       const faltando = cart.flat().filter((n) => !nums.includes(n))
-      if (faltando.length) erros.push('cartela ' + mv[2] + ' anunciada vencedora mas faltam sorteados: ' + faltando)
-      else ok.push('vencedor: cartela ' + mv[2] + ' com os 25 numeros sorteados, nome "' + mv[1].trim() + '"')
+      if (faltando.length) erros.push('cartela ' + mv.cartela + ' anunciada vencedora mas faltam sorteados: ' + faltando)
+      else ok.push('vencedor: cartela ' + mv.cartela + ' com os 25 numeros sorteados, nome "' + mv.nome + '"')
     }
   }
 }

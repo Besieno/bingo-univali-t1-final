@@ -5,8 +5,9 @@ Professor: Rafael Ballotin Martins · Entrega: **11/09/2026 até 08:00**
 
 Equipe: Bernardo Sieno · Henrique Dorow · João Vitor Silva da Cruz · Julio Cesar Manabe Padilha · Nicolas do Vale Mezencio
 
-> Este é o repositório da **versão que vai ser entregue**. O rascunho — o código do
-> João separado por partes, com a lista do que falta — vive em `bingo-univali-t1`.
+> Este é o repositório da **versão que vai ser entregue**: a versão do grupo de **10/09/2026**
+> (`main (6).cpp`), separada em partes. O rascunho — o código do João de 09/09 com a lista
+> do que falta — vive em `bingo-univali-t1`. As versões anteriores estão em `historico/`.
 
 ---
 
@@ -15,16 +16,17 @@ Equipe: Bernardo Sieno · Henrique Dorow · João Vitor Silva da Cruz · Julio C
 ```
 src/          o jogo, um arquivo por parte  ← é aqui que se mexe
 entrega/      o MESMO código, num arquivo só ← é isto que vai pro AVA
-docs/         um documento por parte: o que faz, por quê, e as perguntas de defesa
-ferramentas/  o script que gera entrega/bingo.cpp a partir de src/
+funcoes/      uma ficha por função: o que faz, parâmetros, quem chama, defesa
+docs/         mapa do código, o que pode ser contestado, requisitos, o que foi medido
+ferramentas/  gera entrega/bingo.cpp a partir de src/ e confere uma partida
+historico/    as versões anteriores, com o que cada troca ganhou e perdeu
 referencia/   codefun.h e codefun_GDB.h do professor (só como prova de origem)
-MUDANCAS.md   o que mudou da versão do João para esta, com o porquê de cada mudança
-enunciado.pdf o enunciado original
+enunciado.pdf / enunciado.txt   o enunciado original
 ```
 
 ### Por que dois formatos do mesmo código
 
-O professor pede **um arquivo** (`.txt` ou `.cpp`). Mas 478 linhas num arquivo só é
+O professor pede **um arquivo** (`.txt` ou `.cpp`). Mas um arquivo de quase 400 linhas é
 difícil de ler, de dividir entre cinco pessoas e de estudar para a defesa.
 
 Então o código vive em `src/`, uma parte por arquivo, e `entrega/bingo.cpp` é montado
@@ -33,27 +35,29 @@ a partir dele por script. **Não são duas versões**: é o mesmo código, e o s
 | | `src/` | `entrega/bingo.cpp` |
 |---|---|---|
 | Para quê | ler, estudar, mexer, dividir tarefa | postar no AVA |
-| Quantos arquivos | 9 partes (`.h` + `.cpp`) | 1 |
+| Quantos arquivos | 10 partes (`.h` + `.cpp`) | 1 |
 | Quem edita | você | ninguém — é gerado |
 
 ---
 
-## As 9 partes
+## As 10 partes
 
 | Parte | Arquivo | Responde a pergunta |
 |---|---|---|
 | Comum | `src/comum.h` | quanto mede a cartela? |
 | Tela | `src/tela.*` | onde escrever e de que cor? |
+| **Ordenação** | `src/ordenacao.*` | **as duas sobrecargas do `bubblesort`** |
 | Cartela | `src/cartela.*` | como nasce uma cartela válida? |
 | Sorteio | `src/sorteio.*` | qual o próximo número, e sem repetir? |
 | Vitória | `src/vitoria.*` | essa cartela está completa? |
-| Exibição | `src/exibicao.*` | como o tabuleiro aparece na tela? |
+| Exibição | `src/exibicao.*` | como o tabuleiro e a lista aparecem na tela? |
 | Jogadores | `src/jogadores.*` | quem é o dono de cada cartela? |
 | Jogo | `src/jogo.*` | como a partida acontece do início ao fim? |
 | Menu | `src/menu.*` | Jogar, Sobre ou Sair? |
-| Main | `src/main.cpp` | a largada |
+| Main | `src/main.cpp` | a largada e o `switch` do menu |
 
-Cada uma tem seu documento em `docs/`. Comece por `docs/00-mapa-do-codigo.md`.
+Comece por `docs/00-mapa-do-codigo.md` (o fluxo) e por `funcoes/README.md` (o que cada
+função faz, uma ficha por função).
 
 ---
 
@@ -69,11 +73,15 @@ g++ -std=c++17 -Wall -Wextra -static src/*.cpp -o bingo.exe
 bingo.exe
 ```
 
-Compila **sem nenhum aviso** com `-Wall -Wextra` (g++ 16.1.0, MinGW-w64 UCRT).
+Compila com **2 avisos** com `-Wall -Wextra` (g++ 16.1.0, MinGW-w64 UCRT) — os mesmos
+do arquivo que o grupo mandou: `'linha' set but not used` e `'opcao' is used uninitialized`.
+Os dois estão em `docs/91-o-que-pode-ser-contestado.md`, com o conserto.
 
-> O jogo precisa de uma janela de **120×30**. O `main` já tenta ajustar sozinho
-> (`system("mode con: cols=120 lines=30")`), mas se a janela for menor as cartelas
-> da direita cortam. Windows Terminal e o terminal do VS Code já abrem grandes o bastante.
+> ⚠️ **Esta versão precisa de 122 colunas × 37 linhas** (medido) e **não** chama
+> `system("mode con: ...")`. Num `cmd` de 80×25 ou num Windows Terminal de 120×30 as
+> cartelas da direita cortam e a lista de sorteados fica fora da tela. Antes de apresentar,
+> maximize a janela — ou aplique o conserto de layout descrito em
+> `docs/91-o-que-pode-ser-contestado.md`.
 
 ---
 
@@ -102,14 +110,17 @@ cat entrada.txt | ./bingo.exe > saida.txt
 node ferramentas/conferir-partida.mjs saida.txt
 ```
 
-Rodado assim 16 vezes seguidas, o jogo passou nas 16 — 400 linhas de cartela conferidas.
-(Use **pipe**, não `programa < arquivo`: com redirecionamento o `system("mode con: ...")`
-consome a entrada e o programa sai na hora. É artefato do teste, não bug do jogo.)
+Rodado assim 6 vezes nesta versão, o jogo passou nas 6 — 150 linhas de cartela conferidas.
+(Prefira **pipe** a `programa < arquivo` — é o jeito que foi testado aqui.)
+
+⚠️ **Cuidado ao testar por arquivo nesta versão:** se a entrada acabar sem um `3` (Sair),
+o laço infinito do menu enche o disco (9,3 GB num teste). Sempre com teto: `| head -c 8000000`.
 
 Checklist de 3 minutos antes de subir:
-1. No menu, digite `a` e depois `9` — tem que reclamar e continuar funcionando.
+1. No menu, digite `a` — **hoje isso TRAVA o programa** (86 MB de "Valor inválido" em 2 s).
+   Se o professor fizer esse teste, é o item C1 do `91-o-que-pode-ser-contestado.md`.
 2. Digite um nome com sobrenome — tem que ficar inteiro na cartela.
-3. Jogue até alguém ganhar — tem que sair o nome **e** o número da cartela.
+3. Jogue até alguém ganhar — hoje sai só o nome do jogador, **sem o número da cartela** (o enunciado pede os dois).
 4. Volte ao menu e jogue de novo — as cartelas têm que ser outras.
 5. Abra o arquivo postado e confira que é ele mesmo (o enunciado diz que a conferência é do grupo).
 
@@ -125,9 +136,9 @@ Checklist de 3 minutos antes de subir:
 | Sorteio 1–75 sem repetir, exibido em ordem crescente e sempre visível | `src/sorteio.cpp` + `src/exibicao.cpp` |
 | Cada sorteio só com ENTER | `src/jogo.cpp` |
 | Cor diferente no número da vez e nos já marcados | `src/tela.cpp` + `src/exibicao.cpp` |
-| Para no bingo, mostrando nome **e** número da cartela | `src/vitoria.cpp` + `src/jogo.cpp` |
-| Sub-rotinas com passagem de parâmetros | todas; passagem por referência em `lerOpcao`, `inserirEmOrdem` e `sorteio` |
-| Sem template, sem variável global | não há nenhum dos dois — só `#define`, que é macro de pré-processador |
+| Para no bingo, mostrando nome **e** número da cartela | `src/vitoria.cpp` + `src/jogo.cpp` — ⚠️ hoje sai só o nome |
+| Sub-rotinas com passagem de parâmetros | 21 funções; por valor e por array. ⚠️ esta versão **não usa `&`** em nenhuma assinatura — ver item no `91` |
+| Sem template, sem variável global | não há nenhum dos dois — só `#define`, que é macro de pré-processador. A **sobrecarga** de `bubblesort` não é template: são duas funções escritas à mão |
 | Autores e comentários | cabeçalho em `src/comum.h`, `src/main.cpp` e no arquivo de entrega |
 
 Nota: 50% funcionamento · 20% organização e clareza · 20% recursos da linguagem · 10% autores e comentários.
@@ -139,9 +150,11 @@ Nota: 50% funcionamento · 20% organização e clareza · 20% recursos da lingua
 ⚠️ **Sem defesa, a nota é ZERO**, e a nota do código depende do desempenho nela.
 Cada integrante precisa saber explicar o trabalho **inteiro**, não só a sua parte.
 
-- `docs/90-perguntas-de-defesa.md` — as perguntas prováveis, com a resposta pronta.
-- `docs/91-o-que-pode-ser-contestado.md` — os pontos fracos que sobraram, com o conserto de cada um.
-- Cada `docs/0X-*.md` termina com as perguntas específicas daquela parte.
+- `funcoes/` — uma ficha por função, cada uma terminando com **uma pergunta de defesa e a resposta**.
+- `docs/91-o-que-pode-ser-contestado.md` — os pontos fracos desta versão, com o conserto e o custo de cada um.
+- `docs/versao-anterior-09-09/90-perguntas-de-defesa.md` — 29 perguntas com resposta. Foi escrito para a
+  versão anterior, mas a maioria das respostas vale igual (as funções de cartela, sorteio, vitória e tela
+  são as mesmas em espírito). Confira antes de decorar.
 
 ⚠️ **Cópia (de colega ou da internet) = ZERO sem recuperação.** Por isso os dois
 repositórios são **privados**. Não torne público e não poste o código em lugar nenhum.
