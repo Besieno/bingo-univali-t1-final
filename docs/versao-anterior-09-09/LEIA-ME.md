@@ -7,6 +7,10 @@ que partiu da base do João e seguiu num caminho diferente. Os documentos aqui d
 a versão de 09/09 — aquela que tinha `inserirEmOrdem`, `getline` nos nomes e
 `lerOpcao` com `cin.clear()`.
 
+⚠️ **Todo número de linha citado nestes arquivos é da versão anterior** — conferi: 81 citações
+apontam para linhas que no `src/` de hoje são outra coisa (ou não existem mais). Use o texto
+pela explicação, nunca pela linha. Para achar a linha de hoje, vá em `funcoes/`.
+
 **Para que servem ainda:**
 
 1. **Defesa.** Várias explicações continuam valendo palavra por palavra, porque as funções
