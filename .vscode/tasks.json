@@ -1,0 +1,77 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "cppbuild",
+      "label": "Compilar o JOGO (src/*.cpp)",
+      "command": "g++",
+      "args": [
+        "-fdiagnostics-color=always",
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+        "-g",
+        "-static",
+        "${workspaceFolder}/src/*.cpp",
+        "-o",
+        "${workspaceFolder}/bingo.exe"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          // Acrescenta a pasta do MinGW instalado pelo winget ao PATH so durante a
+          // compilacao. O ";${env:PATH}" no fim mantem o PATH normal da maquina.
+          "PATH": "${env:LOCALAPPDATA}\Microsoft\WinGet\Packages\BrechtSanders.WinLibs.POSIX.UCRT_Microsoft.Winget.Source_8wekyb3d8bbwe\mingw64\bin;${env:PATH}"
+        }
+      },
+      "problemMatcher": ["$gcc"],
+      "group": { "kind": "build", "isDefault": true },
+      "detail": "Junta os arquivos de src/ e gera bingo.exe na raiz do projeto"
+    },
+    {
+      "type": "cppbuild",
+      "label": "Compilar o ARQUIVO UNICO (entrega/bingo.cpp)",
+      "command": "g++",
+      "args": [
+        "-fdiagnostics-color=always",
+        "-std=c++17",
+        "-Wall",
+        "-Wextra",
+        "-g",
+        "-static",
+        "${workspaceFolder}/entrega/bingo.cpp",
+        "-o",
+        "${workspaceFolder}/entrega/bingo.exe"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PATH": "${env:LOCALAPPDATA}\Microsoft\WinGet\Packages\BrechtSanders.WinLibs.POSIX.UCRT_Microsoft.Winget.Source_8wekyb3d8bbwe\mingw64\bin;${env:PATH}"
+        }
+      },
+      "problemMatcher": ["$gcc"],
+      "detail": "Compila o arquivo que vai ser postado - o mesmo codigo, em um arquivo so"
+    },
+    {
+      "type": "cppbuild",
+      "label": "Compilar arquivo ativo (g++)",
+      "command": "g++",
+      "args": [
+        "-fdiagnostics-color=always",
+        "-g",
+        "-static",
+        "${file}",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}.exe"
+      ],
+      "options": {
+        "cwd": "${fileDirname}",
+        "env": {
+          "PATH": "${env:LOCALAPPDATA}\Microsoft\WinGet\Packages\BrechtSanders.WinLibs.POSIX.UCRT_Microsoft.Winget.Source_8wekyb3d8bbwe\mingw64\bin;${env:PATH}"
+        }
+      },
+      "problemMatcher": ["$gcc"],
+      "detail": "Compila so o arquivo aberto - util para testes soltos"
+    }
+  ]
+}

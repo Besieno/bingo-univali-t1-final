@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Depurar o jogo (gdb)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/bingo.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": true,
+      "MIMode": "gdb",
+
+      // Caminho do depurador. NAO adianta escrever so "gdb": o VS Code procura
+      // no PATH do Windows, e o MinGW instalado pelo winget NAO entra no PATH.
+      // ${env:LOCALAPPDATA} resolve o nome do usuario sozinho.
+      // SE O SEU gdb ESTIVER EM OUTRO LUGAR (ex.: C:/mingw64/bin/gdb.exe),
+      // troque a linha abaixo pelo caminho da SUA maquina.
+      "miDebuggerPath": "${env:LOCALAPPDATA}/Microsoft/WinGet/Packages/BrechtSanders.WinLibs.POSIX.UCRT_Microsoft.Winget.Source_8wekyb3d8bbwe/mingw64/bin/gdb.exe",
+
+      "setupCommands": [
+        {
+          "description": "Deixa o gdb mostrar variaveis de forma legivel",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "Compilar o JOGO (src/*.cpp)"
+    }
+  ]
+}

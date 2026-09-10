@@ -1,0 +1,8 @@
+# programas compilados - cada um gera o seu ao rodar
+*.exe
+*.o
+*.out
+
+# arquivos do Windows/editor
+Thumbs.db
+desktop.ini

@@ -1,0 +1,25 @@
+{
+  // Configuracao do IntelliSense (o corretor em tempo real do VS Code).
+  // NAO e o que compila o programa - quem compila e o tasks.json.
+  "version": 4,
+  "configurations": [
+    {
+      "name": "MinGW-w64",
+      "includePath": ["${workspaceFolder}/**"],
+
+      // Caminho do compilador. O IntelliSense usa ele so para descobrir
+      // onde ficam os cabecalhos (<iostream>, <cstdlib>, ...).
+      // Aqui esta o caminho da instalacao feita pelo winget, que e igual
+      // em qualquer Windows - so muda o nome do usuario, e ${env:LOCALAPPDATA}
+      // ja resolve isso sozinho.
+      //
+      // SE O SEU g++ ESTIVER EM OUTRO LUGAR (por exemplo C:/mingw64/bin/g++.exe,
+      // como diz o README), troque a linha abaixo pelo caminho da SUA maquina.
+      "compilerPath": "${env:LOCALAPPDATA}/Microsoft/WinGet/Packages/BrechtSanders.WinLibs.POSIX.UCRT_Microsoft.Winget.Source_8wekyb3d8bbwe/mingw64/bin/g++.exe",
+
+      "cStandard": "c17",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "windows-gcc-x64"
+    }
+  ]
+}
