@@ -52,8 +52,8 @@ segundo caem na mesma sequência."
 
 **Por que incomoda:** apertar Enter sem digitar deixa o nome vazio, e a mensagem final vira
 `" ganhou com a cartela 1!"` — bem no requisito que pede nome **e** número da cartela.
-E um nome com mais de ~30 letras invade a cartela vizinha (a cartela 1 começa na coluna 2,
-a cartela 2 na 42).
+Quanto ao tamanho: os nomes da equipe foram testados e cabem (o maior, "Joao Vitor Silva da
+Cruz", fica inteiro na cartela 3). Um nome acima de ~29 letras é que passaria da coluna 120.
 
 **Conserto:** repetir a pergunta enquanto o nome vier vazio, e cortar o que passar de 25 letras.
 **5 min.** (`while (nome[i].empty())` em volta do `getline`.)
@@ -64,10 +64,15 @@ a cartela 2 na 42).
 
 **Onde:** `src/jogo.cpp` — o `cin.ignore(1000, '\n')` antes do laço e o de dentro dele.
 
-**O que acontece de verdade:** se o jogador apertar Enter duas vezes seguidas, a segunda
-linha fica no buffer. Na rodada seguinte o `cin.ignore` não bloqueia: o número é sorteado,
-aparece em vermelho e **vira verde no mesmo instante**, sem o jogador pedir. O sorteio não
-some — mas o "cada sorteio só ao apertar Enter" foi furado.
+**O que acontece:** o `cin.ignore` espera uma linha, mas não esvazia o que já estava no
+buffer antes. Se o jogador apertar Enter duas vezes seguidas, a segunda linha fica guardada;
+na rodada seguinte o `cin.ignore` não bloqueia, e o número é sorteado, pintado de vermelho e
+**vira verde no mesmo instante**, sem ninguém pedir. O sorteio não some — mas o "cada sorteio
+só ao apertar Enter" foi furado.
+
+> **Honestidade sobre a prova:** isto vem da leitura do código, não de um teste reproduzido.
+> Não dá para automatizar "apertar Enter duas vezes rápido" — quem quiser confirmar, é só
+> abrir o jogo e martelar o Enter.
 
 **Conserto com respaldo:** o próprio `codefun_GDB.h` do professor tem a função `pausar()`,
 que esvazia o buffer antes de esperar:
@@ -100,9 +105,10 @@ do número sorteado. **2 min.**
 
 **Onde:** `src/main.cpp` → `system("mode con: cols=120 lines=30 > nul 2>&1")`.
 
-**Medido:** uma partida inteira usa **120 colunas × 30 linhas** — exatamente o que o comando
-pede, sem folga. Se o comando falhar (terminal que não aceita `mode`), o `> nul` engole o erro
-e as cartelas da direita cortam sem nenhum aviso.
+**Medido:** renderizando a saída real de uma partida inteira, com os nomes da equipe (os mais
+longos que vão aparecer), o tabuleiro ocupa **115 colunas × 26 linhas** — cabe em 120×30 com
+folga. O risco não é o tamanho: é o comando falhar. Num terminal que não aceita `mode`, o `> nul`
+engole o erro e as cartelas da direita cortam sem nenhum aviso (um `cmd` padrão tem 80 colunas).
 
 **Conserto:** testar o retorno do `system` e, se não for 0, pedir para o usuário redimensionar
 a janela antes de continuar. **5 min.**

@@ -106,7 +106,8 @@ Se a resposta não sair sozinha, abra o documento da parte (`docs/0X-*.md`).
 
 **19. Por que `system("mode con: cols=120 lines=30")`?**
 > Porque o tabuleiro tem três cartelas lado a lado e a lista de sorteados embaixo: medindo
-> uma partida inteira, são 120 colunas por 30 linhas.
+> uma partida inteira com os nomes da equipe, são 115 colunas por 26 linhas. Um `cmd` padrão
+> tem 80 colunas, então sem esse comando as cartelas da direita cortariam.
 
 ---
 
