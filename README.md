@@ -88,6 +88,24 @@ g++ -std=c++17 -Wall -Wextra entrega/bingo.cpp -o entrega/bingo.exe
 Depois **rode o `entrega/bingo.exe`** e jogue uma partida inteira antes de postar.
 O arquivo a postar é `entrega/bingo.cpp` — **um só**, na atividade "Trabalho T1".
 
+### Conferência automática (opcional, mas é uma boa resposta na defesa)
+
+`ferramentas/conferir-partida.mjs` lê a saída de uma partida e confere sozinho o que dá para
+checar por texto: as 5 cartelas na tela, cada linha na faixa certa, linhas crescentes e sem
+repetido, cartelas diferentes entre si, lista de sorteados crescente e sem repetir, e se o
+vencedor anunciado tem mesmo os 25 números já sorteados.
+
+```bash
+printf '1\nAna\nBia\nCaio\nDuda\nEva\n' > entrada.txt
+for i in $(seq 1 200); do printf '\n' >> entrada.txt; done
+cat entrada.txt | ./bingo.exe > saida.txt
+node ferramentas/conferir-partida.mjs saida.txt
+```
+
+Rodado assim 16 vezes seguidas, o jogo passou nas 16 — 400 linhas de cartela conferidas.
+(Use **pipe**, não `programa < arquivo`: com redirecionamento o `system("mode con: ...")`
+consome a entrada e o programa sai na hora. É artefato do teste, não bug do jogo.)
+
 Checklist de 3 minutos antes de subir:
 1. No menu, digite `a` e depois `9` — tem que reclamar e continuar funcionando.
 2. Digite um nome com sobrenome — tem que ficar inteiro na cartela.
