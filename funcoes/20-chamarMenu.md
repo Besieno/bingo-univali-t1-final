@@ -18,4 +18,12 @@ Nenhum.
 ## Para a defesa
 P: "A variável `opcao` que vocês passam pra `lerOpcao` já vem com algum valor?"
 R: Não — é declarada em branco (`int opcao;`, linha 38) e passada assim mesmo; funciona porque `lerOpcao` sobrescreve com `cin` antes de usar.
-⚠️ Por isso o `g++ -Wall -Wextra` acusa `'opcao' is used uninitialized` na linha 40 (declarada na 38) — inofensivo na prática, mas é um dos 2 avisos de compilação da versão nova.
+
+> **Corrigido em 10/09** (item C7): a variável era declarada como `int opcao;` e passada sem
+> valor, o que gerava `'opcao' is used uninitialized`. Agora é `int opcao = 0;`
+> (`src/menu.cpp:46`) e o compilador não reclama mais.
+>
+> Ficou de propósito a outra metade: `lerOpcao` **continua recebendo um parâmetro que nunca lê**
+> (ela sobrescreve com `cin >> opcao` antes de qualquer leitura). Não gera aviso, mas é uma
+> pergunta fácil na defesa — a resposta honesta é "o parâmetro é herança de uma versão antiga;
+> hoje ele não serve para nada".

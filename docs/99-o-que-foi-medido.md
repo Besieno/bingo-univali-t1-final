@@ -146,3 +146,23 @@ O que **não** mudou e continua valendo: o tabuleiro ainda precisa de 122 coluna
 Detalhe do conserto do nome: com `getline` não sobra mais `\n` no buffer depois dos nomes,
 então os dois `cin.ignore()` seguidos que vinham antes do sorteio viraram **um**
 `cin.ignore(1000, '\n')` (`src/jogo.cpp:51`). Sem essa troca o jogo pediria dois Enters ali.
+
+## Segunda rodada: os 2 avisos do compilador zerados (10/09/2026)
+
+Duas mudanças, nenhuma de comportamento:
+- `src/menu.cpp:46` — `int opcao;` → `int opcao = 0;`
+- `src/exibicao.cpp:18` e `:39` — a variável `linha` (criada e incrementada, nunca lida) foi removida
+
+Resultado:
+
+| | Antes | Depois |
+|---|---|---|
+| `g++ -std=c++17 -Wall -Wextra` em `src/*.cpp` | 2 avisos | **0** |
+| o mesmo na `entrega/bingo.cpp` | 2 avisos | **0** |
+| com `-Wpedantic` também | — | **0** |
+| 3 partidas no `conferir-partida.mjs` | — | **3 passaram** |
+| letra no menu | 321 bytes e sai limpo | 321 bytes e sai limpo (igual) |
+
+A lista de sorteados continua quebrando a cada 25 números: quem faz isso é o `cout << endl`,
+não o contador que foi removido — conferido nas 3 partidas (66, 70 e 68 números lidos em
+3 linhas, batendo com o contador `(N/75)` da tela).

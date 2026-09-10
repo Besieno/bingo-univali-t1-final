@@ -1,6 +1,6 @@
 # O que pode ser contestado — versão do grupo (10/09/2026)
 
-> ## ✅ Quatro destes já foram aplicados (10/09/2026)
+> ## ✅ Seis destes já foram aplicados (10/09/2026) — o compilador agora está limpo
 >
 > **C1, C2, C3 e C4 estão consertados no código** — 17 linhas tocadas em 3 arquivos
 > (`src/menu.cpp`, `src/jogadores.cpp`, `src/jogo.cpp`), mudando o mínimo possível.
@@ -14,8 +14,18 @@
 > | tela Sobre | "Maio de 2026" | "Setembro de 2026" |
 >
 > 6 partidas pelo `conferir-partida.mjs` depois da mudança: **6 passaram**, e o aviso de
-> "o anúncio não diz o número da cartela" desapareceu. Os avisos do compilador continuam 2
-> (são os itens C7 e C8, 🟡, que não foram tocados).
+> "o anúncio não diz o número da cartela" desapareceu.
+>
+> Numa segunda rodada foram aplicados também **C7 e C8**, os dois que geravam aviso de
+> compilação: `int opcao = 0;` em `chamarMenu` (`src/menu.cpp:46`) e a remoção da variável
+> `linha`, que era criada e incrementada sem nunca ser lida (`src/exibicao.cpp:18` e `:39`).
+> **O programa agora compila com `-Wall -Wextra -Wpedantic` sem um único aviso**, e 3 partidas
+> novas passaram no conferidor.
+>
+> Do C7 ficou a metade cosmética: `lerOpcao` **continua recebendo um parâmetro que nunca lê**.
+> Isso não gera aviso nenhum, mas é uma pergunta fácil do professor ("por que essa função
+> recebe algo que ela ignora?"). Tirar o parâmetro mexe em 3 lugares (`menu.h`, a definição e
+> a chamada) — 3 minutos, se quiserem.
 >
 > **C5 (a janela de 122×37) continua aberto de propósito:** o caminho de 0 minuto é abrir o
 > terminal maximizado; mexer nas coordenadas é o item mais arriscado da lista.
@@ -140,7 +150,7 @@ Não implementem uma limpeza "de verdade" na `apagarSorteado`: apagar a lista co
 
 ---
 
-## C7 🟡 — `lerOpcao` recebe um parâmetro que nunca é lido (aviso do compilador)
+## C7 ✅ APLICADO EM PARTE (era 🟡) — `lerOpcao` recebe um parâmetro que nunca é lido (aviso do compilador)
 
 **Onde** — `src/menu.cpp:11` (`int lerOpcao(int opcao)`), chamada em `src/menu.cpp:38` (`int opcao;` sem valor) e `:40` (`opcao = lerOpcao(opcao);`) / `entrega/bingo.cpp:397`, `:424`, `:426`. Protótipo em `src/menu.h`.
 
@@ -162,7 +172,7 @@ e em `src/menu.cpp:40` chamar `opcao = lerOpcao();`, atualizando o protótipo em
 
 ---
 
-## C8 🟡 — Variável `linha` criada, incrementada e nunca usada (aviso do compilador)
+## C8 ✅ APLICADO (era 🟡) — Variável `linha` criada, incrementada e nunca usada (aviso do compilador)
 
 **Onde** — `src/exibicao.cpp:18` (`int coluna=0, linha=0;`) e `:40` (`linha++;`) / `entrega/bingo.cpp:193` e `:215`.
 

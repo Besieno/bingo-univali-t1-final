@@ -73,9 +73,9 @@ g++ -std=c++17 -Wall -Wextra -static src/*.cpp -o bingo.exe
 bingo.exe
 ```
 
-Compila com **2 avisos** com `-Wall -Wextra` (g++ 16.1.0, MinGW-w64 UCRT) — os mesmos
-do arquivo que o grupo mandou: `'linha' set but not used` e `'opcao' is used uninitialized`.
-Os dois estão em `docs/91-o-que-pode-ser-contestado.md`, com o conserto.
+Compila **sem nenhum aviso** com `-Wall -Wextra` — e também com `-Wpedantic`
+(g++ 16.1.0, MinGW-w64 UCRT). O arquivo que o grupo mandou tinha 2 avisos; os dois foram
+zerados em 10/09 (itens C7 e C8 do `docs/91-o-que-pode-ser-contestado.md`).
 
 > ⚠️ **Esta versão precisa de 122 colunas × 37 linhas** (medido) e **não** chama
 > `system("mode con: ...")`. Num `cmd` de 80×25 ou num Windows Terminal de 120×30 as

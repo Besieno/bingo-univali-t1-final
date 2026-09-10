@@ -21,4 +21,8 @@ nada (void) — imprime direto na tela.
 P: "por que ordenar o vetor aqui dentro, e não guardar já ordenado?"
 R: `sorteio` grava na ordem cronológica de saída; ordenar só na hora de exibir cumpre o R22 (lista sempre crescente) sem mexer em quem usa o vetor pra outra coisa (ex.: `cartelaCompleta`), que não depende de ordem.
 
-⚠️ A variável `linha` (linha 18, incrementada na 40) nunca é lida — gera o aviso do compilador "'linha' set but not used"; e a posição fixa `gotoxy(0, 35)` somada à quebra a cada 25 números empurra a lista pra perto da linha 38 quando há muitos sorteados, parte do motivo de o tabuleiro medir 122×37 e não caber em 80×25 nem 120×30.
+⚠️ A posição fixa `gotoxy(0, 35)` somada à quebra a cada 25 números empurra a lista pra perto da linha 38 quando há muitos sorteados, parte do motivo de o tabuleiro medir 122×37 e não caber em 80×25 nem 120×30.
+
+> **Corrigido em 10/09** (item C8): a variável `linha` era criada e incrementada sem nunca ser
+> lida — gerava o aviso `'linha' set but not used`. Foi removida; a quebra de linha a cada 25
+> números continua sendo feita pelo `cout << endl`, como antes.

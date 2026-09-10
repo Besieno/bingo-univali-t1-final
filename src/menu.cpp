@@ -43,7 +43,7 @@ int chamarMenu() { // Função responsável por controlar o menu principal
 		cout << "       2- Sobre\n";
 		cout << "       3- Sair\n";
 		
-		int opcao;
+		int opcao = 0; // inicializada: lerOpcao sobrescreve antes de ler, mas sem isso o compilador avisa
 		cout << "\n\tEscolha uma opção: ";
 		opcao = lerOpcao(opcao); // Lê e valida a opção escolhida
 	return opcao;

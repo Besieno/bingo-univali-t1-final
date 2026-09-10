@@ -190,7 +190,7 @@ bool cartelaCompleta(int mat[][TAM], int numSorteados[], int quantidade) { // In
 // ------------------------------------------------------------------------
 
 void mostrarSorteado(int num, int numSorteados[], int quantidade) { // Exibe o número que acabou de ser sorteado.
-    int coluna=0, linha=0;
+    int coluna=0;
     gotoxy(0, 35); // Posiciona a mensagem do número sorteado na parte inferior da tela.
     bubblesort(numSorteados, quantidade);
     cout << "Números sorteados " << "(" << quantidade << "/75)\n";
@@ -212,7 +212,6 @@ void mostrarSorteado(int num, int numSorteados[], int quantidade) { // Exibe o n
         if (coluna == 25) {
             cout << endl;
             coluna = 0;
-            linha++;
         }
     }
 }
@@ -429,7 +428,7 @@ int chamarMenu() { // Função responsável por controlar o menu principal
 		cout << "       2- Sobre\n";
 		cout << "       3- Sair\n";
 		
-		int opcao;
+		int opcao = 0; // inicializada: lerOpcao sobrescreve antes de ler, mas sem isso o compilador avisa
 		cout << "\n\tEscolha uma opção: ";
 		opcao = lerOpcao(opcao); // Lê e valida a opção escolhida
 	return opcao;
