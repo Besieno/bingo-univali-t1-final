@@ -110,17 +110,13 @@ cat entrada.txt | ./bingo.exe > saida.txt
 node ferramentas/conferir-partida.mjs saida.txt
 ```
 
-Rodado assim 6 vezes nesta versão, o jogo passou nas 6 — 150 linhas de cartela conferidas.
+Rodado assim 6 vezes depois das correções de 10/09, o jogo passou nas 6 — 150 linhas de cartela conferidas.
 (Prefira **pipe** a `programa < arquivo` — é o jeito que foi testado aqui.)
 
-⚠️ **Cuidado ao testar por arquivo nesta versão:** se a entrada acabar sem um `3` (Sair),
-o laço infinito do menu enche o disco (9,3 GB num teste). Sempre com teto: `| head -c 8000000`.
-
 Checklist de 3 minutos antes de subir:
-1. No menu, digite `a` — **hoje isso TRAVA o programa** (86 MB de "Valor inválido" em 2 s).
-   Se o professor fizer esse teste, é o item C1 do `91-o-que-pode-ser-contestado.md`.
+1. No menu, digite `a` e depois `9` — tem que reclamar e continuar funcionando (corrigido em 10/09).
 2. Digite um nome com sobrenome — tem que ficar inteiro na cartela.
-3. Jogue até alguém ganhar — hoje sai só o nome do jogador, **sem o número da cartela** (o enunciado pede os dois).
+3. Jogue até alguém ganhar — tem que sair `A cartela N do jogador X ganhou!`, com nome **e** número.
 4. Volte ao menu e jogue de novo — as cartelas têm que ser outras.
 5. Abra o arquivo postado e confira que é ele mesmo (o enunciado diz que a conferência é do grupo).
 
@@ -136,7 +132,7 @@ Checklist de 3 minutos antes de subir:
 | Sorteio 1–75 sem repetir, exibido em ordem crescente e sempre visível | `src/sorteio.cpp` + `src/exibicao.cpp` |
 | Cada sorteio só com ENTER | `src/jogo.cpp` |
 | Cor diferente no número da vez e nos já marcados | `src/tela.cpp` + `src/exibicao.cpp` |
-| Para no bingo, mostrando nome **e** número da cartela | `src/vitoria.cpp` + `src/jogo.cpp` — ⚠️ hoje sai só o nome |
+| Para no bingo, mostrando nome **e** número da cartela | `src/vitoria.cpp` + `src/jogo.cpp` |
 | Sub-rotinas com passagem de parâmetros | 21 funções; por valor e por array. ⚠️ esta versão **não usa `&`** em nenhuma assinatura — ver item no `91` |
 | Sem template, sem variável global | não há nenhum dos dois — só `#define`, que é macro de pré-processador. A **sobrecarga** de `bubblesort` não é template: são duas funções escritas à mão |
 | Autores e comentários | cabeçalho em `src/comum.h`, `src/main.cpp` e no arquivo de entrega |

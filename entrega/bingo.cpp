@@ -270,9 +270,10 @@ void exibir(int mat[][TAM], int contador, string nome[], int x, int y) { // Inic
 // ------------------------------------------------------------------------
 
 void nomearCartelas(string nome[]) { // Inicia a função responsável por armazenar os nomes dos jogadores.
+        cin.ignore(1000, '\n'); // Descarta o Enter que sobrou do menu, senão o primeiro getline vem vazio
         for (int i = 0; i < TAM; i++) {
             cout << "\n\tDigite o nome do " << i+1 << "º jogador: ";
-            cin >> nome[i];      
+            getline(cin, nome[i]); // getline lê a linha inteira, então nome composto não ocupa a vaga do próximo
         }
         cout << "\033c";
 }
@@ -311,8 +312,7 @@ void jogar(int mat1[][TAM], int mat2[][TAM], int mat3[][TAM], int mat4[][TAM], i
 	exibir(mat4, 4, nome, 10, 22);
 	exibir(mat5, 5, nome, 90, 22);
 	
-	cin.ignore(); // Aguarda o usuário antes de retornar ao menu
-	cin.ignore();
+	cin.ignore(1000, '\n'); // Aguarda o Enter antes de começar o sorteio (com getline não sobra nada pra descartar)
 	
 	do {
         int num = sorteio(numSorteados, quantidade);
@@ -347,31 +347,31 @@ void jogar(int mat1[][TAM], int mat2[][TAM], int mat3[][TAM], int mat4[][TAM], i
         
         if (cartelaCompleta(mat1, numSorteados, quantidade)) {
             textbackground(GREEN);
-            cout << endl << "A cartela do jogador " << nome[0] << " ganhou!";
+            cout << endl << "A cartela 1 do jogador " << nome[0] << " ganhou!";
             ganhadores++;
         }
         
         if (cartelaCompleta(mat2, numSorteados, quantidade)) {
             textbackground(GREEN);
-            cout << endl << "A cartela do jogador " << nome[1] << " ganhou!";
+            cout << endl << "A cartela 2 do jogador " << nome[1] << " ganhou!";
             ganhadores++;
         }
         
         if (cartelaCompleta(mat3, numSorteados, quantidade)) {
             textbackground(GREEN);
-            cout << endl << "A cartela do jogador " << nome[2] << " ganhou!";
+            cout << endl << "A cartela 3 do jogador " << nome[2] << " ganhou!";
             ganhadores++;
         }
         
         if (cartelaCompleta(mat4, numSorteados, quantidade)) {
             textbackground(GREEN);
-            cout << endl << "A cartela do jogador " << nome[3] << " ganhou!";
+            cout << endl << "A cartela 4 do jogador " << nome[3] << " ganhou!";
             ganhadores++;
         }
         
         if (cartelaCompleta(mat5, numSorteados, quantidade)) {
             textbackground(GREEN);
-            cout << endl << "A cartela do jogador " << nome[4] << " ganhou!";
+            cout << endl << "A cartela 5 do jogador " << nome[4] << " ganhou!";
             ganhadores++;
         }
         
@@ -397,6 +397,14 @@ void jogar(int mat1[][TAM], int mat2[][TAM], int mat3[][TAM], int mat4[][TAM], i
 int lerOpcao(int opcao) { // Função responsável por ler e validar a opção escolhida no menu
 	do {
 		cin >> opcao;
+		if (cin.fail()) { // Não veio um número: o usuário digitou letra, símbolo ou encerrou a entrada
+			if (cin.eof()) { // Não há mais nada pra ler, então não adianta perguntar de novo
+				return 3;
+			}
+			cin.clear(); // Tira o cin do estado de erro, senão nenhuma leitura seguinte funciona
+			cin.ignore(1000, '\n'); // Descarta o que foi digitado e não era número
+			opcao = 0; // Valor inválido de propósito, pra repetir a pergunta
+		}
 		if (opcao < 1 or opcao > 3) { // Verifica se a opção está fora do intervalo válido
 			cout << endl << "\tValor inválido, escolha uma das opções válidas: ";
 		}
@@ -408,7 +416,7 @@ void sobre() { // Função responsável por exibir as informações do trabalho
 	cout<<"\033c";
 	cout << "\n\tEquipe de desenvolvimento: \n\t\tBernardo Sieno\n\t\tHenrique Dorow\n\t\tJoão Vitor Silva da Cruz\n\t\tJulio Cesar Manabe Padilha\n\t\tNicolas do Vale Mezencio\n"; // créditos
 	cout << "\n\tProfessor: Rafael Ballotin Martins - Algoritmos e Programação 2";
-	cout << "\n\tMaio de 2026.\n";
+	cout << "\n\tSetembro de 2026.\n";
 	cout << "\n\n\tEnter para continuar...\n";
 	cin.ignore();
 	cin.ignore();

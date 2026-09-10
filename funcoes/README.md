@@ -7,8 +7,8 @@ Serve para duas coisas: achar rápido onde mexer, e treinar a defesa função po
 Para o andar de cima (em que ordem as coisas acontecem, quem depende de quem), veja
 [`docs/00-mapa-do-codigo.md`](../docs/00-mapa-do-codigo.md).
 
-> As fichas com **⚠️** no fim têm um problema conhecido anotado. O que fazer com cada um
-> está em [`docs/91-o-que-pode-ser-contestado.md`](../docs/91-o-que-pode-ser-contestado.md).
+> **✅ = corrigido em 10/09** (os quatro itens vermelhos do `91`). **⚠️ = problema conhecido que
+> ficou** — o que fazer está em [`docs/91-o-que-pode-ser-contestado.md`](../docs/91-o-que-pode-ser-contestado.md).
 
 
 ## Tela — cursor e cor
@@ -60,14 +60,28 @@ Para o andar de cima (em que ordem as coisas acontecem, quem depende de quem), v
 
 | Função | Ficha | Onde |
 |---|---|---|
-| **nomearCartelas** — pergunta o nome dos 5 jogadores, um por vez | [16-nomearCartelas.md](16-nomearCartelas.md) | `src/jogadores.cpp:13` |
+| **nomearCartelas** ✅ — pergunta o nome dos 5 jogadores, um por vez | [16-nomearCartelas.md](16-nomearCartelas.md) | `src/jogadores.cpp:13` |
 
 ## Jogo — a partida
 
 | Função | Ficha | Onde |
 |---|---|---|
-| **jogar** ⚠️ — o maestro: gera as cartelas, pede nomes, sorteia e checa vencedor até o fim | [17-jogar.md](17-jogar.md) | `src/jogo.cpp:21` |
+| **jogar** ✅ — o maestro: gera as cartelas, pede nomes, sorteia e checa vencedor até o fim | [17-jogar.md](17-jogar.md) | `src/jogo.cpp:21` |
+
+## Menu — Jogar / Sobre / Sair
+
+| Função | Ficha | Onde |
+|---|---|---|
+| **lerOpcao** ✅ — lê e valida a opção do menu (só aceita 1, 2 ou 3) | [18-lerOpcao.md](18-lerOpcao.md) | `src/menu.cpp:11` |
+| **sobre** ✅ — mostra a tela de créditos (equipe, professor, mês/ano) | [19-sobre.md](19-sobre.md) | `src/menu.cpp:29` |
+| **chamarMenu** ⚠️ — desenha o menu principal e devolve a opção escolhida | [20-chamarMenu.md](20-chamarMenu.md) | `src/menu.cpp:31` |
+
+## Main — a largada
+
+| Função | Ficha | Onde |
+|---|---|---|
+| **main** — ponto de entrada: prepara os dados e roda o laço do menu | [21-main.md](21-main.md) | `src/main.cpp:19` |
 
 ---
 
-**21 funções, 7 com alerta.** As sem alerta foram conferidas e estão corretas.
+**21 funções** · 4 corrigidas em 10/09 · 5 ainda com alerta.

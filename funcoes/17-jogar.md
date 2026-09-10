@@ -22,4 +22,10 @@ nada (`void`) — efeito colateral: tela desenhada + arrays acima preenchidos.
 ## Para a defesa
 P: "Por que o contador não continua entre jogos?" R: `quantidade` é por valor (`jogo.h:12`).
 
-⚠️ Vitória (linhas 87,93,99,105,111) só diz "ganhou!" — sem número da cartela (`enunciado.txt:67` pede os dois).
+> **Corrigido em 10/09** (item C3): a mensagem agora sai como **"A cartela 1 do jogador X ganhou!"**
+> (`src/jogo.cpp:86,92,98,104,110`) — o enunciado pede o nome **e** o número da cartela.
+> No mesmo item, os dois `cin.ignore()` seguidos antes do sorteio viraram um `cin.ignore(1000, '
+')`
+> (`src/jogo.cpp:51`): com `getline` nos nomes não sobra mais `
+` para descartar, então dois
+> ignores pediriam dois Enters.

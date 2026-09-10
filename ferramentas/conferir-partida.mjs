@@ -124,9 +124,11 @@ else {
   const linhaVit = linhas.find((s) => s.includes('ganhou'))
   let mv = null
   if (linhaVit) {
-    let m = linhaVit.match(/(.+?) ganhou com a cartela (\d)!/)
-    if (m) mv = { nome: m[1].trim(), cartela: m[2] }
-    else {
+    let m = linhaVit.match(/A cartela (\d) do jogador (.+?) ganhou!/)
+    if (m) mv = { nome: m[2].trim(), cartela: m[1] }
+    else m = linhaVit.match(/(.+?) ganhou com a cartela (\d)!/)
+    if (!mv && m) mv = { nome: m[1].trim(), cartela: m[2] }
+    if (!mv) {
       m = linhaVit.match(/A cartela do jogador (.+?) ganhou!/)
       if (m) {
         // este formato nao diz o numero da cartela: descobre pelo nome escrito na tela

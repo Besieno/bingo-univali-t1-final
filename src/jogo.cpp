@@ -48,8 +48,7 @@ void jogar(int mat1[][TAM], int mat2[][TAM], int mat3[][TAM], int mat4[][TAM], i
 	exibir(mat4, 4, nome, 10, 22);
 	exibir(mat5, 5, nome, 90, 22);
 	
-	cin.ignore(); // Aguarda o usuário antes de retornar ao menu
-	cin.ignore();
+	cin.ignore(1000, '\n'); // Aguarda o Enter antes de começar o sorteio (com getline não sobra nada pra descartar)
 	
 	do {
         int num = sorteio(numSorteados, quantidade);
@@ -84,31 +83,31 @@ void jogar(int mat1[][TAM], int mat2[][TAM], int mat3[][TAM], int mat4[][TAM], i
         
         if (cartelaCompleta(mat1, numSorteados, quantidade)) {
             textbackground(GREEN);
-            cout << endl << "A cartela do jogador " << nome[0] << " ganhou!";
+            cout << endl << "A cartela 1 do jogador " << nome[0] << " ganhou!";
             ganhadores++;
         }
         
         if (cartelaCompleta(mat2, numSorteados, quantidade)) {
             textbackground(GREEN);
-            cout << endl << "A cartela do jogador " << nome[1] << " ganhou!";
+            cout << endl << "A cartela 2 do jogador " << nome[1] << " ganhou!";
             ganhadores++;
         }
         
         if (cartelaCompleta(mat3, numSorteados, quantidade)) {
             textbackground(GREEN);
-            cout << endl << "A cartela do jogador " << nome[2] << " ganhou!";
+            cout << endl << "A cartela 3 do jogador " << nome[2] << " ganhou!";
             ganhadores++;
         }
         
         if (cartelaCompleta(mat4, numSorteados, quantidade)) {
             textbackground(GREEN);
-            cout << endl << "A cartela do jogador " << nome[3] << " ganhou!";
+            cout << endl << "A cartela 4 do jogador " << nome[3] << " ganhou!";
             ganhadores++;
         }
         
         if (cartelaCompleta(mat5, numSorteados, quantidade)) {
             textbackground(GREEN);
-            cout << endl << "A cartela do jogador " << nome[4] << " ganhou!";
+            cout << endl << "A cartela 5 do jogador " << nome[4] << " ganhou!";
             ganhadores++;
         }
         

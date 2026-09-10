@@ -1,5 +1,26 @@
 # O que pode ser contestado — versão do grupo (10/09/2026)
 
+> ## ✅ Quatro destes já foram aplicados (10/09/2026)
+>
+> **C1, C2, C3 e C4 estão consertados no código** — 17 linhas tocadas em 3 arquivos
+> (`src/menu.cpp`, `src/jogadores.cpp`, `src/jogo.cpp`), mudando o mínimo possível.
+> Medido depois da correção:
+>
+> | | Antes | Depois |
+> |---|---|---|
+> | letra no menu | 86 MB de "Valor inválido" em 2 s | 3 avisos e sai limpo (321 bytes) |
+> | "Joao Vitor Silva da Cruz" | virava 2 jogadores, o 5º não era perguntado | fica inteiro na cartela 1 |
+> | vitória | "A cartela do jogador X ganhou!" | "A cartela **1** do jogador X ganhou!" |
+> | tela Sobre | "Maio de 2026" | "Setembro de 2026" |
+>
+> 6 partidas pelo `conferir-partida.mjs` depois da mudança: **6 passaram**, e o aviso de
+> "o anúncio não diz o número da cartela" desapareceu. Os avisos do compilador continuam 2
+> (são os itens C7 e C8, 🟡, que não foram tocados).
+>
+> **C5 (a janela de 122×37) continua aberto de propósito:** o caminho de 0 minuto é abrir o
+> terminal maximizado; mexer nas coordenadas é o item mais arriscado da lista.
+
+
 Esta é a lista honesta do que sobrou **nesta** versão: a que o grupo mandou em 10/09, hoje em `src/` e no arquivo único `entrega/bingo.cpp`. Cada item abaixo foi conferido abrindo o arquivo, e o que diz "medido" foi medido rodando o `.exe` compilado com `g++ 16.1.0`. **Nada foi alterado no código** — a separação em 10 partes não mexeu em lógica nenhuma (as 21 funções batem byte-a-byte com o arquivo do grupo), e nenhum conserto daqui foi aplicado. A decisão de aplicar é do grupo.
 
 Quem aplicar precisa mexer nos **dois** lugares: em `src/<arquivo>.cpp` e regerar `entrega/bingo.cpp` (ou editar os dois à mão), senão o arquivo postado fica diferente do que vocês estudaram.
@@ -11,7 +32,7 @@ Quem aplicar precisa mexer nos **dois** lugares: em `src/<arquivo>.cpp` e regera
 
 ---
 
-## C1 🔴 — Digitar uma letra no menu = laço infinito
+## C1 ✅ APLICADO (era 🔴) — Digitar uma letra no menu = laço infinito
 
 **Onde** — `src/menu.cpp:11-19` (`lerOpcao`) / `entrega/bingo.cpp:397-405`. Chamada em `src/menu.cpp:40` / `entrega/bingo.cpp:426`.
 
@@ -31,7 +52,7 @@ if (opcao < 1 or opcao > 3) {
 
 ---
 
-## C2 🔴 — Nome com espaço é cortado e vaza para a cartela seguinte
+## C2 ✅ APLICADO (era 🔴) — Nome com espaço é cortado e vaza para a cartela seguinte
 
 **Onde** — `src/jogadores.cpp:13-19`, a leitura está na linha `16` (`cin >> nome[i];`) / `entrega/bingo.cpp:272-278`, leitura em `:275`.
 
@@ -53,7 +74,7 @@ for (int i = 0; i < TAM; i++) {
 
 ---
 
-## C3 🔴 — A mensagem de vitória não diz o número da cartela
+## C3 ✅ APLICADO (era 🔴) — A mensagem de vitória não diz o número da cartela
 
 **Onde** — `src/jogo.cpp:87, 93, 99, 105, 111` / `entrega/bingo.cpp:350, 356, 362, 368, 374`.
 
@@ -71,7 +92,7 @@ e repetir com `2` (`:93`), `3` (`:99`), `4` (`:105`), `5` (`:111`) — o número
 
 ---
 
-## C4 🔴 — A tela "Sobre" diz "Maio de 2026"
+## C4 ✅ APLICADO (era 🔴) — A tela "Sobre" diz "Maio de 2026"
 
 **Onde** — `src/menu.cpp:25` / `entrega/bingo.cpp:411`. Contradiz o cabeçalho do próprio trabalho, `src/comum.h:6` / `entrega/bingo.cpp:6`, que diz "Setembro de 2026".
 

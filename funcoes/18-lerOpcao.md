@@ -20,4 +20,9 @@ primeira opção válida digitada.
 ## Para a defesa
 P: "Por que a função recebe um parâmetro `opcao` se ele nunca é usado?"
 R: É resíduo de um design anterior; hoje `cin >> opcao` sobrescreve o parâmetro antes de qualquer leitura, então o valor recebido não influencia o resultado.
-⚠️ Digitar uma letra (não-número) trava a leitura em laço infinito, imprimindo "Valor inválido" sem parar — o `cin` entra em estado de erro e a função nunca chama `cin.clear()`/`cin.ignore()` para limpar e descartar o caractere inválido.
+
+> **Corrigido em 10/09** (item C1): ganhou `cin.clear()` + `cin.ignore(1000, '
+')` quando a leitura
+> falha, e `return 3` quando a entrada termina (`src/menu.cpp:14-21`). Antes, digitar uma letra
+> travava o programa num laço infinito — 86 MB de "Valor inválido" em 2 segundos. **Medido depois
+> da correção:** `a`, `b`, `9`, `3` → três avisos e sai limpo, 321 bytes.

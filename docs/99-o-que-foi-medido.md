@@ -126,3 +126,23 @@ anterior — não misture os números.
 Testar esta versão alimentando o jogo por arquivo é perigoso: se a entrada acabar sem um `3`
 (Sair), o laço infinito do menu enche o disco. Use sempre um teto:
 `cat entrada.txt | ./bingo.exe | head -c 8000000 > saida.txt`.
+
+## Depois das 4 correções (10/09/2026, ainda na versão do grupo)
+
+17 linhas tocadas em 3 arquivos. Medido depois:
+
+| Teste | Antes | Depois |
+|---|---|---|
+| `printf 'a\nb\n9\n3\n' \| bingo.exe` | 86.106.591 bytes em 2 s, sem parar | **321 bytes**, três avisos e sai limpo |
+| nome "Joao Vitor Silva da Cruz" | virava 2 jogadores; o 5º nunca era perguntado | fica inteiro na cartela 1; os 5 nomes compostos entram certos |
+| anúncio do vencedor | `A cartela do jogador X ganhou!` | `A cartela 1 do jogador X ganhou!` |
+| tela Sobre | `Maio de 2026` | `Setembro de 2026` |
+| `conferir-partida.mjs` | 6 de 6 passaram (com aviso do número da cartela) | **6 de 6 passaram, sem aviso nenhum** |
+| avisos de `-Wall -Wextra` | 2 | 2 (os mesmos: `linha` e `opcao` — itens C7 e C8, não tocados) |
+
+O que **não** mudou e continua valendo: o tabuleiro ainda precisa de 122 colunas × 37 linhas
+(item C5), e duas execuções no mesmo segundo ainda geram a mesma partida (item C9).
+
+Detalhe do conserto do nome: com `getline` não sobra mais `\n` no buffer depois dos nomes,
+então os dois `cin.ignore()` seguidos que vinham antes do sorteio viraram **um**
+`cin.ignore(1000, '\n')` (`src/jogo.cpp:51`). Sem essa troca o jogo pediria dois Enters ali.
