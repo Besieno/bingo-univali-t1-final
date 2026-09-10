@@ -37,7 +37,7 @@ sorteio se aquele número já saiu, chamando `verificarSorteado` (`src/sorteio.c
    chamando `verificarSorteado(numSorteados, mat[i][j], quantidade)` (`vitoria.cpp:16`).
    Essa chamada faz uma busca linear nas primeiras `quantidade` posições de
    `numSorteados` (`sorteio.cpp:11-21`) — é o mesmo vetor que `sorteio()` preenche a
-   cada rodada (`sorteio.cpp:37-48`).
+   cada rodada (`sorteio.cpp:37-49`).
 
 4. Se a resposta for "não" (`!verificarSorteado(...)`), a função já sabe que a cartela
    não está completa e devolve `false` **na hora**, sem terminar de olhar o resto da

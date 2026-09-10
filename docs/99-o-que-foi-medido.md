@@ -56,3 +56,31 @@ Três coisas provadas de uma vez:
    imprimir `""` não apaga nada.
 
 Com a vitória na tela, a versão do João ocupa **122 colunas × 38 linhas**.
+
+## Semente repetida dentro do mesmo segundo (versão final)
+
+Dez partidas rodadas em sequência, sem intervalo, saíram em **dois grupos de cinco jogos
+idênticos** — mesmas cartelas, mesma ordem de sorteio. Repetindo com 1 segundo de intervalo
+entre execuções, seis partidas saíram todas diferentes.
+
+É o efeito de `srand(time(NULL))`: `time(NULL)` conta em segundos, então execuções no mesmo
+segundo recebem a mesma semente. Sustenta o item C2 de `91-o-que-pode-ser-contestado.md`.
+
+## Laço infinito da versão do João, medido com precisão
+
+`printf 'a\n' | bingo.exe` (versão do João), cortado em 2 segundos:
+
+| Para onde vai a saída | Bytes em 2 s | Repetições de "Valor inválido" |
+|---|---|---|
+| arquivo (`> saida.txt`) | 59.662.897 (~57 MB) | 1.084.778 |
+| pipe (`\| wc -c`) | 125.347.142 (~120 MB) | — |
+
+A diferença entre os dois é só a velocidade de escrita do destino. O laço não para sozinho:
+só com Ctrl+C, ou quando o disco enche. A mesma entrada na versão final produz 270 bytes e sai limpo.
+
+## Teste de aceitação automático (versão final)
+
+`ferramentas/conferir-partida.mjs` rodado em 16 partidas: **16 passaram**. Ele confere 5 cartelas
+na tela, faixa por linha, linhas crescentes e sem repetido, as 5 cartelas diferentes entre si,
+lista de sorteados crescente e sem repetir dentro de 1–75, e se o vencedor anunciado tem mesmo
+os 25 números já sorteados. São 400 linhas de cartela conferidas.

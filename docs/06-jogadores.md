@@ -46,7 +46,7 @@ Não é aqui que se decide layout, cor ou regra de vitória. É só a ponte entr
 ## Requisitos do enunciado que esta parte atende
 
 - **R14** — "Cada cartela terá um número de identificação e um nome" (`enunciado.txt:49`) + "deve-se solicitar o nome do jogador de cada cartela" (`enunciado.txt:66`). O número vem de `cartela.cpp`/`exibicao.cpp` (fora desta parte); o nome é o que `nomearCartelas` coleta.
-- **R28** — "Ao iniciar o jogo, deve-se solicitar o nome do jogador de cada cartela." (`enunciado.txt:66`). É a função inteira: 5 prompts, um por cartela, antes do sorteio começar (`jogo.cpp:58` roda antes de `jogo.cpp:70` pedir o primeiro Enter do sorteio).
+- **R28** — "Ao iniciar o jogo, deve-se solicitar o nome do jogador de cada cartela." (`enunciado.txt:66`). É a função inteira: 5 prompts, um por cartela, antes do sorteio começar (`jogo.cpp:58` roda antes de `jogo.cpp:68` pedir o primeiro Enter do sorteio).
 - **R30** — "Utilize sub-rotinas e passagem de parâmetros." (`enunciado.txt:70`). `nomearCartelas` recebe `nome[]` por parâmetro e escreve nele; é o vetor declarado em `main.cpp:33` passando por três camadas de chamada (`main` → `chamarMenu` → `jogar` → `nomearCartelas`) até ser preenchido.
 - Contribui (mas não resolve sozinha) para a **R29** — "Ao final, deve ser exibido o nome do jogador e o número da cartela vencedora" (`enunciado.txt:66-67`): esta parte só garante que `nome[]` esteja preenchido; quem de fato imprime a frase de vitória é `jogo.cpp:101-129`.
 

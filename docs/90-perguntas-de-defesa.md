@@ -32,7 +32,8 @@ Se a resposta não sair sozinha, abra o documento da parte (`docs/0X-*.md`).
 
 **5. Onde estão as sub-rotinas com passagem de parâmetros?**
 > Em todo o programa — são 21 funções. Os três jeitos aparecem: **por valor**
-> (`sorteio(... int quantidade)` nas contas internas), **por array** (`gerarCartela(int mat[][TAM])`,
+> (`verificarSorteado(int vet[], int num, int quantidade)` e `cartelaCompleta(..., int quantidade)`:
+> elas só leem, então uma cópia basta), **por array** (`gerarCartela(int mat[][TAM])`,
 > que já chega como endereço) e **por referência** — `lerOpcao(int &opcao)`,
 > `inserirEmOrdem(int lista[], int &quantidade, int valor)` e `sorteio(int numSorteados[], int &quantidade)`,
 > que escrevem direto na variável de quem chamou.
@@ -96,9 +97,9 @@ Se a resposta não sair sozinha, abra o documento da parte (`docs/0X-*.md`).
 > O terminal conta linhas e colunas a partir de 1; o programa conta a partir de 0.
 
 **17. Por que a tabela de cores tem 16 posições?**
-> É o mapeamento dos códigos 0–15 do `codefun.h` (BLACK, BLUE, GREEN… RED = 4) para os
-> códigos ANSI de fundo (40–47 e 100–107). `49` volta ao fundo padrão. A tabela é a mesma
-> do header do professor.
+> É o mapeamento dos códigos 0–15 que os dois headers do professor definem (BLACK, BLUE, GREEN… RED = 4) para os
+> códigos ANSI de fundo (40–47 e 100–107). `49` volta ao fundo padrão. A tabela é a mesma do
+> `codefun_GDB.h` (a versão ANSI; o `codefun.h` é a versão Windows e não tem tabela ANSI).
 
 **18. Como `pintarNumero` acerta a coluna certa dentro da cartela?**
 > `exibir` separa os números com `\t`, e o terminal para a cada 8 colunas. `pintarNumero`

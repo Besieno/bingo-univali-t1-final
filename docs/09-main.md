@@ -10,7 +10,7 @@ que vai circular por todo o resto do programa. Feito isso, ela entrega o control
 só volta a rodar quando o usuário escolhe Sair. Quem realmente joga é `jogo.cpp` (chamado a partir do menu); este
 documento cobre só o que acontece antes disso, em `main.cpp`.
 
-Não existe `main.h` neste projeto — confirmado olhando `src/` (17 arquivos, nenhum `main.h`). `main.cpp` usa
+Não existe `main.h` neste projeto — confirmado olhando `src/` (18 arquivos: 9 `.cpp` e 9 `.h`, nenhum `main.h`). `main.cpp` usa
 `comum.h` (a constante `TAM`) e `menu.h` (a assinatura de `chamarMenu`) direto.
 
 ## Arquivos e funções

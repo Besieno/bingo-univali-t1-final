@@ -39,7 +39,8 @@ reproduzir sem querer — basta fechar e abrir.
 
 **Medido:** dez partidas rodadas em sequência, sem intervalo, saíram em **dois grupos de
 jogos idênticos** (cinco e cinco) — cartelas iguais, mesma ordem de sorteio. Com 1 segundo
-de intervalo entre execuções, seis partidas saíram todas diferentes. Não é teoria.
+de intervalo entre execuções, seis partidas saíram todas diferentes. Não é teoria — o
+registro do teste está em `docs/99-o-que-foi-medido.md`.
 
 **Conserto:** `srand((unsigned int)time(NULL) + (unsigned int)clock());` — `clock()` já vem
 de `<time.h>`, que o arquivo inclui. **1 min.**

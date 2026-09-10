@@ -83,7 +83,7 @@ sub-rotinas chamadas e devolvidas, em vez de um script linear que roda uma vez e
   sem argumento descarta só **um** caractere. Se sobrar mais de um caractere de lixo antes do Enter (por
   exemplo, o usuário digitar "ab" e depois Enter), um caractere continua no buffer e é consumido pela
   leitura seguinte — o mesmo tipo de falha catalogado no relatório de auditoria para a versão anterior
-  do grupo (`docs/97-auditoria-completa.md`, item J3). Passar `1000` como limite garante que a linha inteira até o `\n`
+  do grupo (no repositório do rascunho esse item é o J3 de `falta/01-sorteio/`). Passar `1000` como limite garante que a linha inteira até o `\n`
   (ou até 1000 caracteres, o que vier primeiro) seja descartada de uma vez.
 
 - **Tratar `cin.eof()` como "sair" em vez de deixar o laço tentar de novo**: sem essa saída, uma entrada

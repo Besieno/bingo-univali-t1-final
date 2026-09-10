@@ -1,6 +1,7 @@
 # Mapa do código — comece por aqui
 
-O jogo tem 478 linhas. Divididas em 9 partes, nenhuma passa de 120.
+O jogo inteiro cabe num arquivo de 478 linhas (é o que vai ser entregue). Separado em 9 partes,
+o maior arquivo é `jogo.cpp`, com 141 linhas; os outros oito têm menos de 110 cada.
 Este mapa diz **onde cada coisa mora** e **em que ordem as coisas acontecem**.
 
 ---
@@ -84,6 +85,8 @@ na cabeça sozinho.
 | 09 | [`09-main.md`](09-main.md) | `main` |
 | 90 | [`90-perguntas-de-defesa.md`](90-perguntas-de-defesa.md) | as perguntas prováveis, com resposta |
 | 91 | [`91-o-que-pode-ser-contestado.md`](91-o-que-pode-ser-contestado.md) | os pontos fracos que sobraram |
+| 98 | [`98-requisitos-do-enunciado.md`](98-requisitos-do-enunciado.md) | o enunciado quebrado em requisitos numerados (R01…R43) |
+| 99 | [`99-o-que-foi-medido.md`](99-o-que-foi-medido.md) | o que foi conferido rodando de verdade |
 
 ---
 
@@ -93,6 +96,6 @@ na cabeça sozinho.
    pré-processador, texto trocado antes de compilar. Não existe em tempo de execução.
 2. **Não há template.** Nenhum. É um dos "não pode" do enunciado.
 3. **As sub-rotinas recebem parâmetro de três jeitos**: por valor (`int num`), por array
-   (`int mat[][TAM]`, que já chega como endereço) e **por referência** (`int &quantidade`,
-   em `lerOpcao`, `inserirEmOrdem` e `sorteio`) — que é o recurso que o enunciado
+   (`int mat[][TAM]`, que já chega como endereço) e **por referência** (`int &opcao` em `lerOpcao`,
+   `int &quantidade` em `inserirEmOrdem` e em `sorteio`) — que é o recurso que o enunciado
    pede explicitamente e vale 20% da nota.
